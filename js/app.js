@@ -57,7 +57,7 @@ function renderMap() {
 }
 
 function renderPos() {
-  currPos.forEach((pos) => {
+  currPos.forEach((pos, i) => {
     tiles[pos[0]].style.cssText = `background: yellow; border-radius: 50%;`;
     tiles[pos[1]].style.cssText = `background: yellow; border-radius: 50%;`;
     tiles[pos[2]].style.cssText = `background: yellow; border-radius: 50%;`;

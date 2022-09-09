@@ -1,0 +1,310 @@
+body {
+  display: flex;
+  justify-content: center;
+  background-color: black;
+}
+
+.pacman {
+  margin: 50px;
+  /*   border: 1px solid black; */
+  display: grid;
+  grid-template-rows: repeat(3, 8px);
+  grid-template-columns: repeat(3, 8px);
+}
+
+.tile {
+  margin: 0;
+  background: rgb(216, 250, 8);
+  /*   border: 1px solid black; */
+  background-image: linear-gradient(
+    to bottom,
+    rgb(216, 250, 8),
+    rgb(216, 250, 8)
+  );
+}
+
+.top-center {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+
+  animation-duration: 0.25s;
+  animation-name: waka-t;
+  animation-iteration-count: infinite;
+}
+
+.middle-right {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+
+  animation-duration: 0.25s;
+  animation-name: waka-cr;
+  animation-iteration-count: infinite;
+}
+
+.middle-center {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+
+  animation-duration: 0.25s;
+  animation-name: waka-c;
+  animation-iteration-count: infinite;
+}
+
+.bottom-center {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+
+  animation-duration: 0.25s;
+  animation-name: waka-b;
+  animation-iteration-count: infinite;
+}
+
+.top-left {
+  clip-path: polygon(
+    25% 100%,
+    25% 50%,
+    50% 50%,
+    50% 25%,
+    75% 25%,
+    100% 25%,
+    100% 100%
+  );
+}
+
+.top-right {
+  clip-path: polygon(0% 25%, 50% 25%, 50% 50%, 75% 50%, 75% 100%, 0% 100%);
+
+  animation-duration: 0.25s;
+  animation-name: waka-tr;
+  animation-iteration-count: infinite;
+}
+
+.bottom-right {
+  clip-path: polygon(75% 0%, 75% 50%, 50% 50%, 50% 75%, 25% 75%, 0% 75%, 0% 0%);
+
+  animation-duration: 0.25s;
+  animation-name: waka-br;
+  animation-iteration-count: infinite;
+}
+
+.bottom-left {
+  clip-path: polygon(
+    25% 0%,
+    25% 50%,
+    50% 50%,
+    50% 75%,
+    75% 75%,
+    100% 75%,
+    100% 0%
+  );
+}
+
+.half-middle-center {
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 15%,
+    33% 50%,
+    100% 85%,
+    100% 100%,
+    0% 100%
+  );
+}
+
+.half-middle-right {
+  clip-path: polygon(
+    0% 15%,
+    0% 0%,
+    30% 0%,
+    0% 15%,
+    0% 85%,
+    0% 100%,
+    30% 100%,
+    0% 85%
+  );
+}
+
+.half-top-right {
+  clip-path: polygon(
+    30% 100%,
+    0% 100%,
+    0% 25%,
+    50% 25%,
+    50% 50%,
+    75% 50%,
+    75% 75%
+  );
+}
+
+.half-bottom-right {
+  clip-path: polygon(30% 0%, 0% 0%, 0% 75%, 50% 75%, 50% 50%, 75% 50%, 75% 25%);
+}
+
+.open-middle-center {
+  clip-path: polygon(0% 0%, 75% 0%, 33% 50%, 75% 100%, 0% 100%);
+}
+
+.open-top-middle {
+  clip-path: polygon(0% 0%, 0% 100%, 75% 100%, 100% 70%, 100% 0%);
+}
+
+.open-bottom-center {
+  clip-path: polygon(0% 0%, 75% 0%, 100% 30%, 100% 100%, 0% 100%);
+}
+
+.open-bottom-right {
+  clip-path: polygon(0% 30%, 0% 75%, 40% 75%);
+}
+
+.open-top-right {
+  clip-path: polygon(0% 70%, 0% 25%, 40% 25%);
+}
+
+.open-middle-right {
+  clip-path: polygon(0% 0%);
+}
+
+@keyframes waka-t {
+  25% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+  50% {
+    clip-path: polygon(0% 0%, 0% 100%, 75% 100%, 100% 70%, 100% 0%);
+  }
+
+  75% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+}
+
+@keyframes waka-c {
+  25% {
+    clip-path: polygon(
+      0% 0%,
+      100% 0%,
+      100% 15%,
+      33% 50%,
+      100% 85%,
+      100% 100%,
+      0% 100%
+    );
+  }
+
+  50% {
+    clip-path: polygon(0% 0%, 75% 0%, 33% 50%, 75% 100%, 0% 100%);
+  }
+
+  75% {
+    clip-path: polygon(
+      0% 0%,
+      100% 0%,
+      100% 15%,
+      33% 50%,
+      100% 85%,
+      100% 100%,
+      0% 100%
+    );
+  }
+}
+
+@keyframes waka-b {
+  25% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+
+  50% {
+    clip-path: polygon(0% 0%, 75% 0%, 100% 30%, 100% 100%, 0% 100%);
+  }
+
+  75% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+}
+
+@keyframes waka-tr {
+  25% {
+    clip-path: polygon(
+      30% 100%,
+      0% 100%,
+      0% 25%,
+      50% 25%,
+      50% 50%,
+      75% 50%,
+      75% 75%
+    );
+  }
+
+  50% {
+    clip-path: polygon(0% 70%, 0% 25%, 40% 25%);
+  }
+
+  75% {
+    clip-path: polygon(
+      30% 100%,
+      0% 100%,
+      0% 25%,
+      50% 25%,
+      50% 50%,
+      75% 50%,
+      75% 75%
+    );
+  }
+}
+
+@keyframes waka-cr {
+  25% {
+    clip-path: polygon(
+      0% 15%,
+      0% 0%,
+      30% 0%,
+      0% 15%,
+      0% 85%,
+      0% 100%,
+      30% 100%,
+      0% 85%
+    );
+  }
+
+  50% {
+    clip-path: polygon(0% 0%);
+  }
+
+  75% {
+    clip-path: polygon(
+      0% 15%,
+      0% 0%,
+      30% 0%,
+      0% 15%,
+      0% 85%,
+      0% 100%,
+      30% 100%,
+      0% 85%
+    );
+  }
+}
+
+@keyframes waka-br {
+  25% {
+    clip-path: polygon(
+      30% 0%,
+      0% 0%,
+      0% 75%,
+      50% 75%,
+      50% 50%,
+      75% 50%,
+      75% 25%
+    );
+  }
+
+  50% {
+    clip-path: polygon(0% 30%, 0% 75%, 40% 75%);
+  }
+
+  75% {
+    clip-path: polygon(
+      30% 0%,
+      0% 0%,
+      0% 75%,
+      50% 75%,
+      50% 50%,
+      75% 50%,
+      75% 25%
+    );
+  }
+}
