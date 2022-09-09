@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  display: flex;
+}
+
+.grid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(55, 1rem);
+  grid-template-rows: repeat(6, 1rem);
+  border: 1px solid red;
+}
+
+.tile {
+  /* border: 1px solid blue; */
+}
+
+.edge {
+  background-color: blue;
+}
+
+.small-pill {
+  border: 1px solid grey;
+  border-radius: 50%;
+}
