@@ -1,4 +1,4 @@
-import { board } from "../data/board.js";
+// import { board } from "../data/board.js";
 
 const grid = document.querySelector(".grid");
 let tiles;
@@ -9,20 +9,26 @@ let direction = "left";
 let inputs = [];
 
 let currPos = [
-  [75, 76, 77],
-  [75 + 55, 76 + 55, 77 + 55],
-  [75 + 110, 76 + 110, 77 + 110],
+  [24, 25, 26],
+  [31, 32, 33],
+  [38, 39, 40],
 ];
 
-// const board = [
-//   [0, 0, 0, 0, 0, 0, 0],
-//   [0, 1, 1, 1, 1, 1, 0],
-//   [0, 1, 1, 1, 1, 1, 0],
-//   [0, 1, 1, 1, 1, 1, 0],
-//   [0, 1, 1, 1, 1, 1, 0],
-//   [0, 1, 1, 1, 1, 1, 0],
-//   [0, 0, 0, 0, 0, 0, 0],
-// ];
+let pacmanLayout = [
+  ["top-left", "top-center", "top-right"],
+  ["middle-left", "middle-center", "middle-right"],
+  ["bottom-left", "bottom-center", "bottom-right"],
+];
+
+const board = [
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 1, 1, 1, 1, 1, 0],
+  [0, 1, 1, 1, 1, 1, 0],
+  [0, 1, 1, 1, 1, 1, 0],
+  [0, 1, 1, 1, 1, 1, 0],
+  [0, 1, 1, 1, 1, 1, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+];
 
 renderMap();
 
@@ -58,9 +64,11 @@ function renderMap() {
 
 function renderPos() {
   currPos.forEach((pos, i) => {
-    tiles[pos[0]].style.cssText = `background: yellow; border-radius: 50%;`;
-    tiles[pos[1]].style.cssText = `background: yellow; border-radius: 50%;`;
-    tiles[pos[2]].style.cssText = `background: yellow; border-radius: 50%;`;
+    console.log(tiles[pos[0]].classList);
+    tiles[pos[0]].classList.add(`${pacmanLayout[i][0]}`);
+    tiles[pos[1]].classList.add(`${pacmanLayout[i][1]}`);
+    tiles[pos[2]].classList.add(`${pacmanLayout[i][2]}`);
+    console.log(tiles[pos[0]].classList);
   });
 }
 
