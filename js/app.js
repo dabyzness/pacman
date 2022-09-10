@@ -181,9 +181,9 @@ function getNextPos(dir) {
 
 function unRenderPos() {
   currPos.forEach((pos, i) => {
-    tiles[pos[0]].classList.remove(`${pacmanLayout[i][0]}`);
-    tiles[pos[1]].classList.remove(`${pacmanLayout[i][1]}`);
-    tiles[pos[2]].classList.remove(`${pacmanLayout[i][2]}`);
+    tiles[pos[0]].setAttribute("class", "tile");
+    tiles[pos[1]].setAttribute("class", "tile");
+    tiles[pos[2]].setAttribute("class", "tile");
   });
 }
 
