@@ -101,6 +101,7 @@ function step() {
     throw Error("You hit a wall");
   }
 
+  unRenderPos();
   currPos = nextPos;
   renderPos();
 }
@@ -176,6 +177,14 @@ function getNextPos(dir) {
   }
 
   return nextPos;
+}
+
+function unRenderPos() {
+  currPos.forEach((pos, i) => {
+    tiles[pos[0]].classList.remove(`${pacmanLayout[i][0]}`);
+    tiles[pos[1]].classList.remove(`${pacmanLayout[i][1]}`);
+    tiles[pos[2]].classList.remove(`${pacmanLayout[i][2]}`);
+  });
 }
 
 setInterval(() => {
