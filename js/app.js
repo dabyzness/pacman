@@ -20,6 +20,24 @@ let pacmanLayoutRight = [
   ["bottom-left", "bottom-center", "bottom-right"],
 ];
 
+let pacmanLayoutLeft = [
+  ["bottom-right dir-left", "bottom-center dir-left", "bottom-left dir-left"],
+  ["middle-right dir-left", "middle-center dir-left", "middle-left dir-left"],
+  ["top-right dir-left", "top-center dir-left", "top-left dir-left"],
+];
+
+let pacmanLayoutUp = [
+  ["top-right dir-up", "middle-right dir-up", "bottom-right dir-up"],
+  ["top-center dir-up", "middle-center dir-up", "bottom-center dir-up"],
+  ["top-left dir-up", "middle-left dir-up", "bottom-left dir-up"],
+];
+
+let pacmanLayoutDown = [
+  ["bottom-left dir-down", "middle-left dir-down", "top-left dir-down"],
+  ["bottom-center dir-down", "middle-center dir-down", "top-center dir-down"],
+  ["bottom-right dir-down", "middle-right dir-down", "top-right dir-down"],
+];
+
 const board = [
   [0, 0, 0, 0, 0, 0, 0],
   [0, 1, 1, 1, 1, 1, 0],
@@ -63,11 +81,38 @@ function renderMap() {
 }
 
 function renderPos() {
-  currPos.forEach((pos, i) => {
-    tiles[pos[0]].classList.add(`${pacmanLayoutRight[i][0]}`);
-    tiles[pos[1]].classList.add(`${pacmanLayoutRight[i][1]}`);
-    tiles[pos[2]].classList.add(`${pacmanLayoutRight[i][2]}`);
-  });
+  switch (direction) {
+    case "up":
+      currPos.forEach((pos, i) => {
+        tiles[pos[1]].setAttribute("class", `tile ${pacmanLayoutUp[i][1]}`);
+        tiles[pos[0]].setAttribute("class", `tile ${pacmanLayoutUp[i][0]}`);
+        tiles[pos[2]].setAttribute("class", `tile ${pacmanLayoutUp[i][2]}`);
+      });
+      break;
+    case "down":
+      currPos.forEach((pos, i) => {
+        tiles[pos[1]].setAttribute("class", `tile ${pacmanLayoutDown[i][1]}`);
+        tiles[pos[0]].setAttribute("class", `tile ${pacmanLayoutDown[i][0]}`);
+        tiles[pos[2]].setAttribute("class", `tile ${pacmanLayoutDown[i][2]}`);
+      });
+      break;
+    case "left":
+      currPos.forEach((pos, i) => {
+        tiles[pos[1]].setAttribute("class", `tile ${pacmanLayoutLeft[i][1]}`);
+        tiles[pos[0]].setAttribute("class", `tile ${pacmanLayoutLeft[i][0]}`);
+        tiles[pos[2]].setAttribute("class", `tile ${pacmanLayoutLeft[i][2]}`);
+      });
+      break;
+    case "right":
+      currPos.forEach((pos, i) => {
+        tiles[pos[1]].setAttribute("class", `tile ${pacmanLayoutRight[i][1]}`);
+        tiles[pos[0]].setAttribute("class", `tile ${pacmanLayoutRight[i][0]}`);
+        tiles[pos[2]].setAttribute("class", `tile ${pacmanLayoutRight[i][2]}`);
+      });
+      break;
+    default:
+      break;
+  }
 }
 
 window.addEventListener("keydown", ({ key }) => {

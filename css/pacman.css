@@ -10,12 +10,6 @@ body {
   grid-template-columns: repeat(3, 8px);
 }
 
-.tile {
-  /* margin: 0; */
-
-  /*   border: 1px solid black; */
-}
-
 .top-center {
   background-image: var(--pacman-bg);
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
@@ -99,6 +93,18 @@ body {
     100% 75%,
     100% 0%
   );
+}
+
+.dir-left {
+  transform: rotate(180deg);
+}
+
+.dir-up {
+  transform: rotate(-90deg);
+}
+
+.dir-down {
+  transform: rotate(90deg);
 }
 /* 
 .half-middle-center {
