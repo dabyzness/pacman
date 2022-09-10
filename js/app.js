@@ -95,18 +95,6 @@ function step() {
   const dir = inputs.shift() || direction;
   const nextPos = getNextPos(dir);
   console.log(nextPos);
-  // switch (dir) {
-  //   case "up":
-  //     break;
-  //   case "right":
-  //     nextPos = currPos + 1;
-  //     break;
-  //   case "left":
-  //     nextPos = currPos - 1;
-  //     break;
-  //   case "down":
-  //     nextPos = currPos + board[0].length;
-  //     break;
 
   // direction = dir;
 
