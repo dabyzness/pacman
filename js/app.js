@@ -64,11 +64,9 @@ function renderMap() {
 
 function renderPos() {
   currPos.forEach((pos, i) => {
-    console.log(tiles[pos[0]].classList);
     tiles[pos[0]].classList.add(`${pacmanLayout[i][0]}`);
     tiles[pos[1]].classList.add(`${pacmanLayout[i][1]}`);
     tiles[pos[2]].classList.add(`${pacmanLayout[i][2]}`);
-    console.log(tiles[pos[0]].classList);
   });
 }
 
