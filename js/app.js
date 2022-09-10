@@ -94,33 +94,70 @@ window.addEventListener("keydown", ({ key }) => {
 function step() {
   const dir = inputs.shift() || direction;
   const nextPos = getNextPos(dir);
-  console.log(nextPos);
+  // console.log(nextPos);
 
-  // direction = dir;
+  direction = dir;
 
-  // if (isWall(nextPos)) {
-  //   throw Error("You hit a wall");
-  // }
+  if (isWall(nextPos, direction)) {
+    throw Error("You hit a wall");
+  }
   // currPos = nextPos;
 
   renderPos();
 }
 
-function isWall(pos) {
-  const rowNum = Math.floor(pos / board[0].length);
-  const colNum = pos % board[0].length;
+function isWall(pos, dir) {
+  let row = [];
+  let col = [];
 
-  if (!board[rowNum][colNum]) {
-    return true;
+  switch (dir) {
+    case "up":
+      row = pos[0].map((tileNo) => Math.floor(tileNo / board[0].length));
+      col = pos[0].map((tileNo) => tileNo % board[0].length);
+      break;
+    case "down":
+      row = pos[2].map((tileNo) => Math.floor(tileNo / board[0].length));
+      col = pos[2].map((tileNo) => tileNo % board[0].length);
+      break;
+    case "left":
+      row.push(
+        Math.floor(pos[0][0] / board[0].length),
+        Math.floor(pos[1][0] / board[0].length),
+        Math.floor(pos[2][0] / board[0].length)
+      );
+      col.push(
+        pos[0][0] % board[0].length,
+        pos[1][0] % board[0].length,
+        pos[2][0] % board[0].length
+      );
+      break;
+    case "right":
+      row.push(
+        Math.floor(pos[0][2] / board[0].length),
+        Math.floor(pos[1][2] / board[0].length),
+        Math.floor(pos[2][2] / board[0].length)
+      );
+      col.push(
+        pos[0][2] % board[0].length,
+        pos[1][2] % board[0].length,
+        pos[2][2] % board[0].length
+      );
+      break;
+  }
+
+  for (let i = 0; i < row.length; i += 1) {
+    if (!board[row[i]][col[i]]) {
+      return true;
+    }
   }
 
   return false;
 }
 
-function getNextPos(direction) {
+function getNextPos(dir) {
   let nextPos = [];
 
-  switch (direction) {
+  switch (dir) {
     case "up":
       nextPos = currPos.map((row) =>
         row.map((tileNo) => tileNo - board[0].length)
