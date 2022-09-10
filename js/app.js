@@ -14,25 +14,25 @@ let currPos = [
   [38, 39, 40],
 ];
 
-let pacmanLayoutRight = [
+const pacmanLayoutRight = [
   ["top-left", "top-center", "top-right"],
   ["middle-left", "middle-center", "middle-right"],
   ["bottom-left", "bottom-center", "bottom-right"],
 ];
 
-let pacmanLayoutLeft = [
+const pacmanLayoutLeft = [
   ["bottom-right dir-left", "bottom-center dir-left", "bottom-left dir-left"],
   ["middle-right dir-left", "middle-center dir-left", "middle-left dir-left"],
   ["top-right dir-left", "top-center dir-left", "top-left dir-left"],
 ];
 
-let pacmanLayoutUp = [
+const pacmanLayoutUp = [
   ["top-right dir-up", "middle-right dir-up", "bottom-right dir-up"],
   ["top-center dir-up", "middle-center dir-up", "bottom-center dir-up"],
   ["top-left dir-up", "middle-left dir-up", "bottom-left dir-up"],
 ];
 
-let pacmanLayoutDown = [
+const pacmanLayoutDown = [
   ["bottom-left dir-down", "middle-left dir-down", "top-left dir-down"],
   ["bottom-center dir-down", "middle-center dir-down", "top-center dir-down"],
   ["bottom-right dir-down", "middle-right dir-down", "top-right dir-down"],
@@ -143,6 +143,7 @@ function step() {
   direction = dir;
 
   if (isWall(nextPos, direction)) {
+    renderPos();
     throw Error("You hit a wall");
   }
 
@@ -234,4 +235,4 @@ function unRenderPos() {
 
 setInterval(() => {
   step();
-}, 500);
+}, 100);
