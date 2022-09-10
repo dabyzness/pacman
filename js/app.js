@@ -14,7 +14,7 @@ let currPos = [
   [38, 39, 40],
 ];
 
-let pacmanLayout = [
+let pacmanLayoutRight = [
   ["top-left", "top-center", "top-right"],
   ["middle-left", "middle-center", "middle-right"],
   ["bottom-left", "bottom-center", "bottom-right"],
@@ -64,9 +64,9 @@ function renderMap() {
 
 function renderPos() {
   currPos.forEach((pos, i) => {
-    tiles[pos[0]].classList.add(`${pacmanLayout[i][0]}`);
-    tiles[pos[1]].classList.add(`${pacmanLayout[i][1]}`);
-    tiles[pos[2]].classList.add(`${pacmanLayout[i][2]}`);
+    tiles[pos[0]].classList.add(`${pacmanLayoutRight[i][0]}`);
+    tiles[pos[1]].classList.add(`${pacmanLayoutRight[i][1]}`);
+    tiles[pos[2]].classList.add(`${pacmanLayoutRight[i][2]}`);
   });
 }
 
