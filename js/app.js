@@ -94,15 +94,14 @@ window.addEventListener("keydown", ({ key }) => {
 function step() {
   const dir = inputs.shift() || direction;
   const nextPos = getNextPos(dir);
-  // console.log(nextPos);
 
   direction = dir;
 
   if (isWall(nextPos, direction)) {
     throw Error("You hit a wall");
   }
-  // currPos = nextPos;
 
+  currPos = nextPos;
   renderPos();
 }
 
