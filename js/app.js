@@ -94,29 +94,28 @@ window.addEventListener("keydown", ({ key }) => {
 });
 
 function step() {
-  let nextPos;
   const dir = inputs.shift() || direction;
-  switch (dir) {
-    case "up":
-      nextPos = currPos - board[0].length;
-      break;
-    case "right":
-      nextPos = currPos + 1;
-      break;
-    case "left":
-      nextPos = currPos - 1;
-      break;
-    case "down":
-      nextPos = currPos + board[0].length;
-      break;
-  }
+  const nextPos = getNextPos(dir);
+  console.log(nextPos);
+  // switch (dir) {
+  //   case "up":
+  //     break;
+  //   case "right":
+  //     nextPos = currPos + 1;
+  //     break;
+  //   case "left":
+  //     nextPos = currPos - 1;
+  //     break;
+  //   case "down":
+  //     nextPos = currPos + board[0].length;
+  //     break;
 
-  direction = dir;
+  // direction = dir;
 
-  if (isWall(nextPos)) {
-    throw Error("You hit a wall");
-  }
-  currPos = nextPos;
+  // if (isWall(nextPos)) {
+  //   throw Error("You hit a wall");
+  // }
+  // currPos = nextPos;
 
   renderPos();
 }
@@ -130,6 +129,31 @@ function isWall(pos) {
   }
 
   return false;
+}
+
+function getNextPos(direction) {
+  let nextPos = [];
+
+  switch (direction) {
+    case "up":
+      nextPos = currPos.map((row) =>
+        row.map((tileNo) => tileNo - board[0].length)
+      );
+      break;
+    case "down":
+      nextPos = currPos.map((row) =>
+        row.map((tileNo) => tileNo + board[0].length)
+      );
+      break;
+    case "left":
+      nextPos = currPos.map((row) => row.map((tileNo) => tileNo - 1));
+      break;
+    case "right":
+      nextPos = currPos.map((row) => row.map((tileNo) => tileNo + 1));
+      break;
+  }
+
+  return nextPos;
 }
 
 setInterval(() => {
