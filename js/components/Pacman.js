@@ -1,11 +1,18 @@
+const startPosition = [
+  [74, 75, 76],
+  [74 + 55, 75 + 55, 76 + 55],
+  [74 + 110, 75 + 110, 76 + 110],
+];
+
 export class Pacman {
   constructor() {
     this.direction = null;
-    this.currPos = [
-      [24, 25, 26],
-      [31, 32, 33],
-      [38, 39, 40],
-    ];
+    this.currPos = startPosition;
+    // [
+    //   [24, 25, 26],
+    //   [31, 32, 33],
+    //   [38, 39, 40],
+    // ];
     this.velocity = null;
   }
 

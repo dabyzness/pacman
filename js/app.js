@@ -1,4 +1,4 @@
-// import { board } from "../data/board.js";
+import { board } from "../data/board.js";
 import { Game } from "../js/components/Game.js";
 
 const grid = document.querySelector(".grid");
@@ -39,15 +39,15 @@ const pacmanLayoutDown = [
   ["bottom-right dir-down", "middle-right dir-down", "top-right dir-down"],
 ];
 
-const board = [
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 1, 1, 1, 0],
-  [0, 1, 1, 1, 1, 1, 0],
-  [0, 1, 1, 1, 1, 1, 0],
-  [0, 1, 1, 1, 1, 1, 0],
-  [0, 1, 1, 1, 1, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-];
+// const board = [
+//   [0, 0, 0, 0, 0, 0, 0],
+//   [0, 2, 1, 1, 1, 2, 0],
+//   [0, 1, 1, 1, 1, 1, 0],
+//   [0, 1, 1, 1, 1, 1, 0],
+//   [0, 1, 1, 1, 1, 1, 0],
+//   [0, 2, 2, 2, 2, 2, 0],
+//   [0, 0, 0, 0, 0, 0, 0],
+// ];
 
 const game = new Game(board);
 renderMap();
@@ -238,96 +238,16 @@ window.addEventListener("keydown", ({ key }) => {
 // }
 
 function unRenderPos(character) {
-  character.currPos.forEach((pos) => {
-    tiles[pos[0]].setAttribute("class", "tile");
-    tiles[pos[1]].setAttribute("class", "tile");
-    tiles[pos[2]].setAttribute("class", "tile");
+  character.currPos.forEach((row, i) => {
+    row.forEach((tileNo, i) => {
+      tiles[tileNo].setAttribute(
+        "class",
+        game.board[Math.floor(tileNo / game.board[0].length)][
+          tileNo % game.board[0].length
+        ].className
+      );
+    });
   });
-
-  switch (character.direction) {
-    case "up":
-      tiles[character.currPos[2][0]].setAttribute(
-        "class",
-        game.board[Math.floor(character.currPos[2][0] / game.board[0].length)][
-          character.currPos[2][0] % game.board[0].length
-        ]
-      );
-      tiles[character.currPos[2][1]].setAttribute(
-        "class",
-        game.board[Math.floor(character.currPos[2][1] / game.board[0].length)][
-          character.currPos[2][1] % game.board[0].length
-        ]
-      );
-      tiles[character.currPos[2][2]].setAttribute(
-        "class",
-        game.board[Math.floor(character.currPos[2][2] / game.board[0].length)][
-          character.currPos[2][2] % game.board[0].length
-        ]
-      );
-      break;
-    case "down":
-      tiles[character.currPos[0][0]].setAttribute(
-        "class",
-        game.board[Math.floor(character.currPos[0][0] / game.board[0].length)][
-          character.currPos[0][0] % game.board[0].length
-        ]
-      );
-      tiles[character.currPos[0][1]].setAttribute(
-        "class",
-        game.board[Math.floor(character.currPos[0][1] / game.board[0].length)][
-          character.currPos[0][1] % game.board[0].length
-        ]
-      );
-      tiles[character.currPos[0][2]].setAttribute(
-        "class",
-        game.board[Math.floor(character.currPos[0][2] / game.board[0].length)][
-          character.currPos[0][2] % game.board[0].length
-        ]
-      );
-      break;
-    case "left":
-      tiles[character.currPos[0][2]].setAttribute(
-        "class",
-        game.board[Math.floor(character.currPos[0][2] / game.board[0].length)][
-          character.currPos[0][2] % game.board[0].length
-        ]
-      );
-      tiles[character.currPos[1][2]].setAttribute(
-        "class",
-        game.board[Math.floor(character.currPos[1][2] / game.board[0].length)][
-          character.currPos[1][2] % game.board[0].length
-        ]
-      );
-      tiles[character.currPos[2][2]].setAttribute(
-        "class",
-        game.board[Math.floor(character.currPos[2][2] / game.board[0].length)][
-          character.currPos[2][2] % game.board[0].length
-        ]
-      );
-      break;
-    case "right":
-      tiles[character.currPos[0][0]].setAttribute(
-        "class",
-        game.board[Math.floor(character.currPos[0][0] / game.board[0].length)][
-          character.currPos[0][0] % game.board[0].length
-        ]
-      );
-      tiles[character.currPos[1][0]].setAttribute(
-        "class",
-        game.board[Math.floor(character.currPos[1][0] / game.board[0].length)][
-          character.currPos[1][0] % game.board[0].length
-        ]
-      );
-      tiles[character.currPos[2][0]].setAttribute(
-        "class",
-        game.board[Math.floor(character.currPos[2][0] / game.board[0].length)][
-          character.currPos[2][0] % game.board[0].length
-        ]
-      );
-      break;
-    default:
-      break;
-  }
 }
 
 setInterval(() => {
