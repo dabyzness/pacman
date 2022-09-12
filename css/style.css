@@ -22,6 +22,12 @@ body {
 }
 
 .small-pill {
-  border: 1px solid grey;
-  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.small-pill::after {
+  content: ".";
 }
