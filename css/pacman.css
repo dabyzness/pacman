@@ -12,7 +12,16 @@ body {
 
 .top-center {
   background-image: var(--pacman-bg);
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(
+    0% 0%,
+    25% 0%,
+    25% -10%,
+    100% 0%,
+    100% 25%,
+    110% 25%,
+    110% 110%,
+    -10% 110%
+  );
 
   animation-duration: 0.25s;
   animation-name: waka-t;
@@ -21,12 +30,21 @@ body {
 
 .middle-left {
   background-image: var(--pacman-bg);
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(0% 0%, 25% 0%, 25% -10%, 110% -10%, 110% 110%, 0% 100%);
 }
 
 .middle-right {
   background-image: var(--pacman-bg);
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(
+    -10% -10%,
+    75% -10%,
+    75% 0%,
+    100% 0%,
+    100% 100%,
+    75% 100%,
+    75% 110%,
+    -10% 110%
+  );
 
   animation-duration: 0.25s;
   animation-name: waka-cr;
@@ -35,7 +53,7 @@ body {
 
 .middle-center {
   background-image: var(--pacman-bg);
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(-10% -10%, 110% -10%, 110% 110%, -10% 110%);
 
   animation-duration: 0.25s;
   animation-name: waka-c;
@@ -44,7 +62,14 @@ body {
 
 .bottom-center {
   background-image: var(--pacman-bg);
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(
+    -10% -10%,
+    110% -10%,
+    110% 75%,
+    100% 75%,
+    100% 100%,
+    0% 100%
+  );
 
   animation-duration: 0.25s;
   animation-name: waka-b;
@@ -54,19 +79,19 @@ body {
 .top-left {
   background-image: var(--pacman-bg);
   clip-path: polygon(
-    25% 100%,
+    25% 110%,
     25% 50%,
     50% 50%,
     50% 25%,
     75% 25%,
-    100% 25%,
-    100% 100%
+    110% 25%,
+    110% 110%
   );
 }
 
 .top-right {
   background-image: var(--pacman-bg);
-  clip-path: polygon(0% 25%, 50% 25%, 50% 50%, 75% 50%, 75% 100%, 0% 100%);
+  clip-path: polygon(-10% 25%, 50% 25%, 50% 50%, 75% 50%, 75% 110%, -10% 110%);
 
   animation-duration: 0.25s;
   animation-name: waka-tr;
@@ -75,7 +100,16 @@ body {
 
 .bottom-right {
   background-image: var(--pacman-bg);
-  clip-path: polygon(75% 0%, 75% 50%, 50% 50%, 50% 75%, 25% 75%, 0% 75%, 0% 0%);
+  clip-path: polygon(
+    75% -10%,
+    75% 0%,
+    75% 50%,
+    50% 50%,
+    50% 75%,
+    25% 75%,
+    -10% 75%,
+    -10% -10%
+  );
 
   animation-duration: 0.25s;
   animation-name: waka-br;
@@ -85,13 +119,13 @@ body {
 .bottom-left {
   background-image: var(--pacman-bg);
   clip-path: polygon(
-    25% 0%,
+    25% -10%,
     25% 50%,
     50% 50%,
     50% 75%,
     75% 75%,
-    100% 75%,
-    100% 0%
+    110% 75%,
+    110% -10%
   );
 }
 
@@ -174,66 +208,98 @@ body {
 
 @keyframes waka-t {
   25% {
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(
+      0% 0%,
+      25% 0%,
+      25% -10%,
+      100% 0%,
+      100% 25%,
+      110% 25%,
+      110% 110%,
+      -10% 110%
+    );
   }
   50% {
-    clip-path: polygon(0% 0%, 0% 100%, 75% 100%, 100% 70%, 100% 0%);
+    clip-path: polygon(-10% -10%, -10% 110%, 75% 110%, 110% 70%, 110% -10%);
   }
 
   75% {
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(
+      0% 0%,
+      25% 0%,
+      25% -10%,
+      100% 0%,
+      100% 25%,
+      110% 25%,
+      110% 110%,
+      -10% 110%
+    );
   }
 }
 
 @keyframes waka-c {
   25% {
     clip-path: polygon(
-      0% 0%,
-      100% 0%,
+      -10% -10%,
+      110% -10%,
       100% 15%,
       33% 50%,
       100% 85%,
-      100% 100%,
-      0% 100%
+      110% 110%,
+      -10% 110%
     );
   }
 
   50% {
-    clip-path: polygon(0% 0%, 75% 0%, 33% 50%, 75% 100%, 0% 100%);
+    clip-path: polygon(-10% -10%, 75% -10%, 33% 50%, 75% 110%, -10% 110%);
   }
 
   75% {
     clip-path: polygon(
-      0% 0%,
-      100% 0%,
+      -10% -10%,
+      110% -10%,
       100% 15%,
       33% 50%,
       100% 85%,
-      100% 100%,
-      0% 100%
+      110% 110%,
+      -10% 110%
     );
   }
 }
 
 @keyframes waka-b {
   25% {
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(
+      -10% -10%,
+      110% -10%,
+      110% 75%,
+      100% 75%,
+      100% 100%,
+      0% 100%
+    );
   }
 
   50% {
-    clip-path: polygon(0% 0%, 75% 0%, 100% 30%, 100% 100%, 0% 100%);
+    clip-path: polygon(-10% -10%, 75% -10%, 120% 30%, 110% 110%, -10% 110%);
   }
 
   75% {
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(
+      -10% -10%,
+      110% -10%,
+      110% 75%,
+      100% 75%,
+      100% 100%,
+      0% 100%
+    );
   }
 }
 
 @keyframes waka-tr {
   25% {
     clip-path: polygon(
-      30% 100%,
-      0% 100%,
+      30% 110%,
+      -10% 110%,
       0% 25%,
       50% 25%,
       50% 50%,
@@ -243,14 +309,14 @@ body {
   }
 
   50% {
-    clip-path: polygon(0% 70%, 0% 25%, 40% 25%);
+    clip-path: polygon(-10% 70%, -10% 25%, 40% 25%);
   }
 
   75% {
     clip-path: polygon(
-      30% 100%,
-      0% 100%,
-      0% 25%,
+      30% 110%,
+      -10% 110%,
+      -10% 25%,
       50% 25%,
       50% 50%,
       75% 50%,
@@ -262,14 +328,14 @@ body {
 @keyframes waka-cr {
   25% {
     clip-path: polygon(
-      0% 15%,
-      0% 0%,
-      30% 0%,
-      0% 15%,
-      0% 85%,
-      0% 100%,
-      30% 100%,
-      0% 85%
+      -10% 15%,
+      -10% -10%,
+      30% -10%,
+      -10% 15%,
+      -10% 85%,
+      -10% 110%,
+      30% 110%,
+      -10% 85%
     );
   }
 
@@ -279,14 +345,14 @@ body {
 
   75% {
     clip-path: polygon(
-      0% 15%,
-      0% 0%,
-      30% 0%,
-      0% 15%,
-      0% 85%,
-      0% 100%,
-      30% 100%,
-      0% 85%
+      -10% 15%,
+      -10% -10%,
+      30% -10%,
+      -10% 15%,
+      -10% 85%,
+      -10% 110%,
+      30% 110%,
+      -10% 85%
     );
   }
 }
@@ -294,9 +360,9 @@ body {
 @keyframes waka-br {
   25% {
     clip-path: polygon(
-      30% 0%,
-      0% 0%,
-      0% 75%,
+      30% -10%,
+      -10% -10%,
+      -10% 75%,
       50% 75%,
       50% 50%,
       75% 50%,
@@ -310,9 +376,9 @@ body {
 
   75% {
     clip-path: polygon(
-      30% 0%,
-      0% 0%,
-      0% 75%,
+      30% -10%,
+      -10% -10%,
+      -10% 75%,
       50% 75%,
       50% 50%,
       75% 50%,
