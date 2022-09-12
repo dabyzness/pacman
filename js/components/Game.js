@@ -73,9 +73,44 @@ export class Game {
     }
     const nextPos = this.player.getNextPos(this.board[0].length, this.inputs);
 
+    this.handleIfPointAhead(nextPos, this.player);
+
     if (this.isWallAhead(nextPos, this.player)) {
       return false;
     }
+
     this.player.currPos = nextPos;
+  }
+
+  handleIfPointAhead(nextPos, character) {
+    let tile;
+    switch (character.direction) {
+      case "up":
+        tileValue =
+          this.board[Math.floor(nextPos[0][1] / this.board[0].length)][
+            nextPos[0][1] % this.board[0].length
+          ];
+        break;
+      case "down":
+        tileValue =
+          this.board[Math.floor(nextPos[2][1] / this.board[0].length)][
+            nextPos[2][1] % this.board[0].length
+          ];
+        break;
+      case "left":
+        tileValue =
+          this.board[Math.floor(nextPos[1][0] / this.board[0].length)][
+            nextPos[1][0] % this.board[0].length
+          ];
+        break;
+      case "right":
+        tileValue =
+          this.board[Math.floor(nextPos[1][2] / this.board[0].length)][
+            nextPos[1][2] % this.board[0].length
+          ];
+        break;
+      default:
+        break;
+    }
   }
 }
