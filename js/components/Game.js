@@ -18,43 +18,8 @@ export class Game {
   }
 
   isWallAhead(nextPos, character) {
-    let row = [];
-    let col = [];
-
-    switch (character.direction) {
-      case "up":
-        row = nextPos[0].map((tileNo) => this.getTileRow(tileNo));
-        col = nextPos[0].map((tileNo) => this.getTileCol(tileNo));
-        break;
-      case "down":
-        row = nextPos[2].map((tileNo) => this.getTileRow(tileNo));
-        col = nextPos[2].map((tileNo) => this.getTileCol(tileNo));
-        break;
-      case "left":
-        row.push(
-          this.getTileRow(nextPos[0][0]),
-          this.getTileRow(nextPos[1][0]),
-          this.getTileRow(nextPos[2][0])
-        );
-        col.push(
-          this.getTileCol(nextPos[0][0]),
-          this.getTileCol(nextPos[1][0]),
-          this.getTileCol(nextPos[2][0])
-        );
-        break;
-      case "right":
-        row.push(
-          this.getTileRow(nextPos[0][2]),
-          this.getTileRow(nextPos[1][2]),
-          this.getTileRow(nextPos[2][2])
-        );
-        col.push(
-          this.getTileCol(nextPos[0][2]),
-          this.getTileCol(nextPos[1][2]),
-          this.getTileCol(nextPos[2][2])
-        );
-        break;
-    }
+    let row = this.getTilesRowPosDir(nextPos, character.direction);
+    let col = this.getTilesColPosDir(nextPos, character.direction);
 
     for (let i = 0; i < row.length; i += 1) {
       if (!this.board[row[i]][col[i]].value) {
@@ -133,5 +98,63 @@ export class Game {
 
   getTileCol(tileNo) {
     return tileNo % this.board[0].length;
+  }
+
+  getTilesRowPosDir(position, direction) {
+    let row = [];
+
+    switch (direction) {
+      case "up":
+        row = position[0].map((tileNo) => this.getTileRow(tileNo));
+        break;
+      case "down":
+        row = position[2].map((tileNo) => this.getTileRow(tileNo));
+        break;
+      case "left":
+        row.push(
+          this.getTileRow(position[0][0]),
+          this.getTileRow(position[1][0]),
+          this.getTileRow(position[2][0])
+        );
+        break;
+      case "right":
+        row.push(
+          this.getTileRow(position[0][2]),
+          this.getTileRow(position[1][2]),
+          this.getTileRow(position[2][2])
+        );
+        break;
+    }
+
+    return row;
+  }
+
+  getTilesColPosDir(position, direction) {
+    let col = [];
+
+    switch (direction) {
+      case "up":
+        col = position[0].map((tileNo) => this.getTileCol(tileNo));
+        break;
+      case "down":
+        col = position[2].map((tileNo) => this.getTileCol(tileNo));
+        break;
+      case "left":
+        col.push(
+          this.getTileCol(position[0][0]),
+          this.getTileCol(position[1][0]),
+          this.getTileCol(position[2][0])
+        );
+        break;
+      case "right":
+        col.push(
+          this.getTileCol(position[0][2]),
+          this.getTileCol(position[1][2]),
+          this.getTileCol(position[2][2])
+        );
+        break;
+    }
+
+    return col;
   }
 }
