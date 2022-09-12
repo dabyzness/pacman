@@ -86,25 +86,25 @@ export class Game {
     let tile;
     switch (character.direction) {
       case "up":
-        tileValue =
+        tile =
           this.board[Math.floor(nextPos[0][1] / this.board[0].length)][
             nextPos[0][1] % this.board[0].length
           ];
         break;
       case "down":
-        tileValue =
+        tile =
           this.board[Math.floor(nextPos[2][1] / this.board[0].length)][
             nextPos[2][1] % this.board[0].length
           ];
         break;
       case "left":
-        tileValue =
+        tile =
           this.board[Math.floor(nextPos[1][0] / this.board[0].length)][
             nextPos[1][0] % this.board[0].length
           ];
         break;
       case "right":
-        tileValue =
+        tile =
           this.board[Math.floor(nextPos[1][2] / this.board[0].length)][
             nextPos[1][2] % this.board[0].length
           ];
@@ -112,9 +112,15 @@ export class Game {
       default:
         break;
     }
+
+    if (tile.value === 2) {
+      this.increasePoints(10);
+      tile.setValue(1);
+    }
   }
 
   increasePoints(points) {
     this.points += points;
+    console.log(this.points);
   }
 }
