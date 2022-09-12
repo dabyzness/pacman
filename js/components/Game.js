@@ -10,6 +10,7 @@ export class Game {
     this.inputs = [];
     this.points = 0;
     this.pillsLeftOnBoard = 244;
+    this.winner = false;
   }
 
   setInputs(input) {
@@ -118,10 +119,15 @@ export class Game {
       this.increasePoints(10);
       tile.setValue(1);
       this.pillsLeftOnBoard -= 1;
+      this.isWinner();
     }
   }
 
   increasePoints(points) {
     this.points += points;
+  }
+
+  isWinner() {
+    this.winner = this.pillsLeftOnBoard ? false : true;
   }
 }
