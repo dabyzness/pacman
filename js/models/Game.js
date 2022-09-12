@@ -1,5 +1,6 @@
 import { Tile } from "./Tile.js";
 import { Pacman } from "./Pacman.js";
+import { Ghost } from "./Ghost.js";
 
 export class Game {
   constructor(board) {
@@ -7,6 +8,12 @@ export class Game {
       row.map((tileValue) => new Tile(tileValue))
     );
     this.player = new Pacman();
+    this.ghosts = [
+      new Ghost("blinky"),
+      new Ghost("pinky"),
+      new Ghost("clyde"),
+      new Ghost("inky"),
+    ];
     this.inputs = [];
     this.points = 0;
     this.pillsLeftOnBoard = 244;

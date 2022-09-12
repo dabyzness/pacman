@@ -30,6 +30,12 @@ const pacmanLayoutDown = [
   ["bottom-right dir-down", "middle-right dir-down", "top-right dir-down"],
 ];
 
+const ghostLayout = [
+  ["bloop-top-left", "bloop-top-center", "bloop-top-right"],
+  ["bloop-middle-left", "bloop-middle-center", "bloop-middle-right"],
+  ["bloop-bottom-left", "bloop-bottom-center", "bloop-bottom-right"],
+];
+
 const game = new Game(board);
 renderMap();
 
@@ -109,8 +115,28 @@ function unRenderPos(character) {
   });
 }
 
+function renderGhost(ghosts) {
+  ghosts.forEach((ghost) => {
+    ghost.currPos.forEach((pos, i) => {
+      tiles[pos[1]].setAttribute(
+        "class",
+        `tile ${ghost.name} ${ghostLayout[i][1]}`
+      );
+      tiles[pos[0]].setAttribute(
+        "class",
+        `tile ${ghost.name} ${ghostLayout[i][0]}`
+      );
+      tiles[pos[2]].setAttribute(
+        "class",
+        `tile ${ghost.name} ${ghostLayout[i][2]}`
+      );
+    });
+  });
+}
+
 setInterval(() => {
   unRenderPos(game.player);
   game.movePlayer();
   renderPos();
+  renderGhost(game.ghosts);
 }, 100);

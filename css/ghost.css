@@ -109,7 +109,6 @@
 .bloop-bottom-center {
   clip-path: polygon(
     -10% 40%,
-    0% 40%,
     20% 40%,
     20% 60%,
     40% 60%,
@@ -130,7 +129,6 @@
 .bloop-bottom-right {
   clip-path: polygon(
     -10% 40%,
-    0% 40%,
     20% 40%,
     20% 60%,
     40% 60%,
