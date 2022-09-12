@@ -24,7 +24,7 @@ body {
 .small-pill {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   color: white;
 }
 
