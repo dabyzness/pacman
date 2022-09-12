@@ -9,6 +9,7 @@ export class Game {
     this.player = new Pacman();
     this.inputs = [];
     this.points = 0;
+    this.pillsLeftOnBoard = 244;
   }
 
   setInputs(input) {
@@ -116,11 +117,11 @@ export class Game {
     if (tile.value === 2) {
       this.increasePoints(10);
       tile.setValue(1);
+      this.pillsLeftOnBoard -= 1;
     }
   }
 
   increasePoints(points) {
     this.points += points;
-    console.log(this.points);
   }
 }
