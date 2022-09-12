@@ -78,7 +78,7 @@ export class Game {
     this.handleIfPointAhead(nextPos, this.player);
 
     if (this.isWallAhead(nextPos, this.player)) {
-      return false;
+      return;
     }
 
     this.player.currPos = nextPos;
@@ -129,5 +129,13 @@ export class Game {
 
   isWinner() {
     this.winner = this.pillsLeftOnBoard ? false : true;
+  }
+
+  getTileRow(tileNo) {
+    return Math.floor(tileNo / this.board[0].length);
+  }
+
+  getTileCol(tileNo) {
+    return tileNo % this.board[0].length;
   }
 }
