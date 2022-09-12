@@ -23,39 +23,35 @@ export class Game {
 
     switch (character.direction) {
       case "up":
-        row = nextPos[0].map((tileNo) =>
-          Math.floor(tileNo / this.board[0].length)
-        );
-        col = nextPos[0].map((tileNo) => tileNo % this.board[0].length);
+        row = nextPos[0].map((tileNo) => this.getTileRow(tileNo));
+        col = nextPos[0].map((tileNo) => this.getTileCol(tileNo));
         break;
       case "down":
-        row = nextPos[2].map((tileNo) =>
-          Math.floor(tileNo / this.board[0].length)
-        );
-        col = nextPos[2].map((tileNo) => tileNo % this.board[0].length);
+        row = nextPos[2].map((tileNo) => this.getTileRow(tileNo));
+        col = nextPos[2].map((tileNo) => this.getTileCol(tileNo));
         break;
       case "left":
         row.push(
-          Math.floor(nextPos[0][0] / this.board[0].length),
-          Math.floor(nextPos[1][0] / this.board[0].length),
-          Math.floor(nextPos[2][0] / this.board[0].length)
+          this.getTileRow(nextPos[0][0]),
+          this.getTileRow(nextPos[1][0]),
+          this.getTileRow(nextPos[2][0])
         );
         col.push(
-          nextPos[0][0] % this.board[0].length,
-          nextPos[1][0] % this.board[0].length,
-          nextPos[2][0] % this.board[0].length
+          this.getTileCol(nextPos[0][0]),
+          this.getTileCol(nextPos[1][0]),
+          this.getTileCol(nextPos[2][0])
         );
         break;
       case "right":
         row.push(
-          Math.floor(nextPos[0][2] / this.board[0].length),
-          Math.floor(nextPos[1][2] / this.board[0].length),
-          Math.floor(nextPos[2][2] / this.board[0].length)
+          this.getTileRow(nextPos[0][2]),
+          this.getTileRow(nextPos[1][2]),
+          this.getTileRow(nextPos[2][2])
         );
         col.push(
-          nextPos[0][2] % this.board[0].length,
-          nextPos[1][2] % this.board[0].length,
-          nextPos[2][2] % this.board[0].length
+          this.getTileCol(nextPos[0][2]),
+          this.getTileCol(nextPos[1][2]),
+          this.getTileCol(nextPos[2][2])
         );
         break;
     }
