@@ -30,17 +30,81 @@ export class Game {
     return false;
   }
 
+  improvePlayerMovementHitBox(nextPos, player) {
+    let row = this.getTilesRowPosDir(nextPos, player.direction);
+    let col = this.getTilesColPosDir(nextPos, player.direction);
+
+    let totalValue = 0;
+
+    for (let i = 0; i < row.length; i += 1) {
+      totalValue += this.board[row[i]][col[i]].value;
+    }
+
+    if (totalValue < 2) {
+      return;
+    }
+
+    console.log(totalValue);
+    let improvedPos = [];
+
+    switch (player.direction) {
+      case "up":
+        if (!this.board[row[0]][col[0]].value) {
+          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo + 1));
+        } else {
+          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo - 1));
+        }
+        break;
+      case "down":
+        if (!this.board[row[0]][col[0]].value) {
+          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo + 1));
+        } else {
+          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo - 1));
+        }
+        break;
+      case "left":
+        if (!this.board[row[0]][col[0]].value) {
+          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo + 55));
+        } else {
+          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo - 55));
+        }
+        break;
+      case "right":
+        if (!this.board[row[0]][col[0]].value) {
+          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo + 55));
+        } else {
+          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo - 55));
+        }
+        break;
+      default:
+        break;
+    }
+
+    return improvedPos;
+  }
+
   movePlayer() {
     if (!this.player.direction) {
       return;
     }
-    const nextPos = this.player.getNextPos(this.board[0].length, this.inputs);
-
-    this.handleIfPointAhead(nextPos, this.player);
+    let nextPos = this.player.getNextPos(this.board[0].length, this.inputs);
 
     if (this.isWallAhead(nextPos, this.player)) {
-      return;
+      const improvedPos = this.improvePlayerMovementHitBox(
+        nextPos,
+        this.player
+      );
+
+      if (improvedPos) {
+        console.log(nextPos);
+        console.log(improvedPos);
+        nextPos = improvedPos;
+      } else {
+        return;
+      }
     }
+
+    this.handleIfPointAhead(nextPos, this.player);
 
     this.player.currPos = nextPos;
   }
