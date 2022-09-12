@@ -8,6 +8,7 @@ export class Game {
     );
     this.player = new Pacman();
     this.inputs = [];
+    this.points = 0;
   }
 
   setInputs(input) {
