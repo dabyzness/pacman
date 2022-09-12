@@ -113,4 +113,8 @@ export class Game {
         break;
     }
   }
+
+  increasePoints(points) {
+    this.points += points;
+  }
 }
