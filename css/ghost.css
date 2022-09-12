@@ -1,0 +1,227 @@
+.bloop-top-left {
+  clip-path: polygon(
+    40% 110%,
+    40% 60%,
+    60% 60%,
+    60% 40%,
+    80% 40%,
+    80% 20%,
+    110% 20%,
+    110% 110%
+  );
+}
+
+.bloop-top-center {
+  clip-path: polygon(
+    -10% 20%,
+    20% 20%,
+    20% 0%,
+    20% 0%,
+    100% 0%,
+    100% 20%,
+    110% 110%,
+    -10% 110%
+  );
+}
+
+.bloop-top-right {
+  clip-path: polygon(
+    -10% 20%,
+    40% 20%,
+    40% 40%,
+    60% 40%,
+    60% 60%,
+    80% 60%,
+    80% 110%,
+    -10% 110%
+  );
+}
+
+.bloop-middle-left {
+  clip-path: polygon(
+    110% -10%,
+    100% 0%,
+    40% 0%,
+    40% 20%,
+    20% 20%,
+    20% 110%,
+    110% 110%
+  );
+}
+
+.bloop-middle-right {
+  clip-path: polygon(
+    -10% -10%,
+    80% 0%,
+    80% 20%,
+    100% 20%,
+    100% 110%,
+    -10% 110%
+  );
+}
+
+.bloop-bottom-left {
+  clip-path: polygon(
+    20% -10%,
+    20% 60%,
+    40% 60%,
+    40% 80%,
+    80% 80%,
+    80% 60%,
+    100% 60%,
+    100% 40%,
+    110% -10%
+  );
+
+  animation-name: bloop-left;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+}
+
+.bloop-bottom-center {
+  clip-path: polygon(
+    -10% 40%,
+    0% 40%,
+    20% 40%,
+    20% 60%,
+    40% 60%,
+    40% 80%,
+    80% 80%,
+    80% 60%,
+    100% 60%,
+    100% 40%,
+    110% -10%,
+    -10% -10%
+  );
+
+  animation-name: bloop-center;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+}
+
+.bloop-bottom-right {
+  clip-path: polygon(
+    -10% 40%,
+    0% 40%,
+    20% 40%,
+    20% 60%,
+    40% 60%,
+    40% 80%,
+    80% 80%,
+    80% 60%,
+    100% 60%,
+    100% 40%,
+    100% -10%,
+    -10% -10%
+  );
+
+  animation-name: bloop-right;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+}
+
+.anim-bottom-left {
+  clip-path: polygon(
+    20% -10%,
+    20% 80%,
+    40% 80%,
+    40% 60%,
+    60% 60%,
+    60% 40%,
+    80% 40%,
+    80% 60%,
+    100% 60%,
+    110% 60%,
+    110% -10%
+  );
+}
+
+.anim-bottom-center {
+  clip-path: polygon(
+    -10% 60%,
+    0% 60%,
+    0% 80%,
+    40% 80%,
+    40% 60%,
+    60% 60%,
+    60% 40%,
+    80% 40%,
+    80% 60%,
+    100% 60%,
+    110% -10%,
+    -10% -10%
+  );
+}
+
+.anim-bottom-right {
+  clip-path: polygon(
+    -10% 60%,
+    0% 60%,
+    0% 80%,
+    40% 80%,
+    40% 60%,
+    60% 60%,
+    60% 40%,
+    80% 40%,
+    80% 60%,
+    100% 60%,
+    110% -10%,
+    -10% -10%
+  );
+}
+
+@keyframes bloop-left {
+  50% {
+    clip-path: polygon(
+      20% -10%,
+      20% 80%,
+      40% 80%,
+      40% 60%,
+      60% 60%,
+      60% 40%,
+      80% 40%,
+      80% 60%,
+      100% 60%,
+      110% 60%,
+      110% -10%
+    );
+  }
+}
+
+@keyframes bloop-center {
+  50% {
+    clip-path: polygon(
+      -10% 60%,
+      0% 60%,
+      0% 80%,
+      40% 80%,
+      40% 60%,
+      60% 60%,
+      60% 40%,
+      80% 40%,
+      80% 60%,
+      100% 60%,
+      110% -10%,
+      -10% -10%
+    );
+  }
+}
+
+@keyframes bloop-right {
+  50% {
+    clip-path: polygon(
+      -10% 60%,
+      0% 60%,
+      0% 80%,
+      40% 80%,
+      40% 60%,
+      60% 60%,
+      60% 40%,
+      80% 40%,
+      80% 60%,
+      100% 60%,
+      110% -10%,
+      -10% -10%
+    );
+  }
+}
