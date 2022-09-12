@@ -44,7 +44,6 @@ export class Game {
       return;
     }
 
-    console.log(totalValue);
     let improvedPos = [];
 
     switch (player.direction) {
@@ -96,8 +95,6 @@ export class Game {
       );
 
       if (improvedPos) {
-        console.log(nextPos);
-        console.log(improvedPos);
         nextPos = improvedPos;
       } else {
         return;

@@ -91,10 +91,7 @@ window.addEventListener("keydown", ({ key }) => {
 
   game.setInputs(key.replace("Arrow", "").toLowerCase());
 
-  console.log(game.player);
-
   if (!game.player.direction) {
-    console.log("hit");
     game.player.direction = key.replace("Arrow", "").toLowerCase();
   }
 });
