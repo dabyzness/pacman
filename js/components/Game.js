@@ -85,26 +85,26 @@ export class Game {
     switch (character.direction) {
       case "up":
         tile =
-          this.board[Math.floor(nextPos[0][1] / this.board[0].length)][
-            nextPos[0][1] % this.board[0].length
+          this.board[this.getTileRow(nextPos[0][1])][
+            this.getTileCol(nextPos[0][1])
           ];
         break;
       case "down":
         tile =
-          this.board[Math.floor(nextPos[2][1] / this.board[0].length)][
-            nextPos[2][1] % this.board[0].length
+          this.board[this.getTileRow(nextPos[2][1])][
+            this.getTileCol(nextPos[2][1])
           ];
         break;
       case "left":
         tile =
-          this.board[Math.floor(nextPos[1][0] / this.board[0].length)][
-            nextPos[1][0] % this.board[0].length
+          this.board[this.getTileRow(nextPos[1][0])][
+            this.getTileCol(nextPos[1][0])
           ];
         break;
       case "right":
         tile =
-          this.board[Math.floor(nextPos[1][2] / this.board[0].length)][
-            nextPos[1][2] % this.board[0].length
+          this.board[this.getTileRow(nextPos[1][2])][
+            this.getTileCol(nextPos[1][2])
           ];
         break;
       default:
