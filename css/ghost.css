@@ -1,3 +1,31 @@
+.blinky {
+  background-image: linear-gradient(to bottom, rgb(255, 0, 0), rgb(255, 0, 0));
+}
+
+.pinky {
+  background-image: linear-gradient(
+    to bottom,
+    rgb(255, 184, 255),
+    rgb(255, 184, 255)
+  );
+}
+
+.inky {
+  background-image: linear-gradient(
+    to bottom,
+    rgb(0, 255, 255),
+    rgb(0, 255, 255)
+  );
+}
+
+.clyde {
+  background-image: linear-gradient(
+    to bottom,
+    rgb(255, 184, 81),
+    rgb(255, 184, 81)
+  );
+}
+
 .bloop-top-left {
   clip-path: polygon(
     40% 110%,

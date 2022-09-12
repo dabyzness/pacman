@@ -1,5 +1,5 @@
-import { Tile } from "../components/Tile.js";
-import { Pacman } from "../components/Pacman.js";
+import { Tile } from "./Tile.js";
+import { Pacman } from "./Pacman.js";
 
 export class Game {
   constructor(board) {

@@ -1,5 +1,5 @@
 import { board } from "../data/board.js";
-import { Game } from "../js/components/Game.js";
+import { Game } from "./models/Game.js";
 
 const grid = document.querySelector(".grid");
 let tiles;
