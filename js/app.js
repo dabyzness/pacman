@@ -151,6 +151,10 @@ setInterval(() => {
     return;
   }
 
+  if (game.isGhostTouching(tiles[game.player.currPos[1][1]])) {
+    return;
+  }
+
   if (!game.player.direction) {
     renderPos();
     renderGhost(game.ghosts);

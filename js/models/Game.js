@@ -193,6 +193,14 @@ export class Game {
     ghost.setDirection(choices[randomIndex][1]);
   }
 
+  isGhostTouching(tile) {
+    if (["blinky", "pinky", "inky", "clyde"].includes(tile.classList[1])) {
+      return true;
+    }
+
+    return false;
+  }
+
   increasePoints(tileValue) {
     if (tileValue === 2) {
       this.points += 10;
