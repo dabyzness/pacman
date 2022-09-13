@@ -7,12 +7,12 @@ const valueToClassName = [
 
 const valueToEdgeName = [
   "tile edge",
-  "edge-top",
-  "edge-middle",
-  "edge-top-left",
-  "edge-top-right",
-  "edge-bottom-left",
-  "edge-bottom-right",
+  "tile edge-top",
+  "tile edge-middle",
+  "tile edge-top-left",
+  "tile edge-top-right",
+  "tile edge-bottom-left",
+  "tile edge-bottom-right",
 ];
 
 export class Tile {
