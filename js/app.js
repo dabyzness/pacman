@@ -146,8 +146,10 @@ function renderGhost(ghosts) {
 
 setInterval(() => {
   unRenderPos(game.player);
+
   game.movePlayer();
   game.ghosts.forEach((ghost) => {
+    unRenderPos(ghost);
     game.moveGhost(ghost);
   });
 
