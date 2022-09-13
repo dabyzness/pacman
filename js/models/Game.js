@@ -3,7 +3,7 @@ import { Pacman } from "./Pacman.js";
 import { Ghost } from "./Ghost.js";
 
 export class Game {
-  constructor(board) {
+  constructor(board, livesLeft) {
     this.board = board.map((row) =>
       row.map((tileValue) => new Tile(tileValue))
     );
@@ -17,7 +17,9 @@ export class Game {
     this.inputs = [];
     this.points = 0;
     this.pillsLeftOnBoard = 244;
+    this.livesLeft = livesLeft;
     this.winner = false;
+    this.gameOver = false;
   }
 
   setInputs(input) {

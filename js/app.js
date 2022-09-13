@@ -36,7 +36,7 @@ const ghostLayout = [
   ["bloop-bottom-left", "bloop-bottom-center", "bloop-bottom-right"],
 ];
 
-const game = new Game(board);
+const game = new Game(board, 3);
 renderMap();
 
 function init() {}
