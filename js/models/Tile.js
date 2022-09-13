@@ -5,14 +5,34 @@ const valueToClassName = [
   "tile big-pill",
 ];
 
+const valueToEdgeName = [
+  "tile edge",
+  "edge-top",
+  "edge-middle",
+  "edge-top-left",
+  "edge-top-right",
+  "edge-bottom-left",
+  "edge-bottom-right",
+];
+
 export class Tile {
   constructor(value) {
-    this.value = value;
-    this.className = valueToClassName[value];
+    if (value > 0) {
+      this.value = value;
+      this.className = valueToClassName[value];
+    } else {
+      this.value = value;
+      this.className = valueToEdgeName[Math.abs(value)];
+    }
   }
 
   setValue(value) {
-    this.value = value;
-    this.className = valueToClassName[value];
+    if (value > 0) {
+      this.value = value;
+      this.className = valueToClassName[value];
+    } else {
+      this.value = value;
+      this.className = valueToEdgeName[Math.abs(value)];
+    }
   }
 }

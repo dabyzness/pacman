@@ -7,8 +7,8 @@ body {
 .grid {
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(55, 8px);
-  grid-template-rows: repeat(61, 8px);
+  grid-template-columns: repeat(57, 8px);
+  grid-template-rows: repeat(63, 8px);
   border: 1px solid red;
 }
 
@@ -50,4 +50,52 @@ body {
     border: 1px solid white;
     background-color: white;
   }
+}
+
+.edge-top {
+  background: linear-gradient(
+    to bottom,
+    transparent 2px,
+    blue 2px,
+    blue 4px,
+    transparent 4px
+  );
+}
+
+.edge-top-left {
+  margin: 4px 0 0 4px;
+  border-top: 2px solid blue;
+  border-left: 2px solid blue;
+  border-top-left-radius: 100px;
+}
+
+.edge-top-right {
+  margin: 4px 4px 0 0;
+  border-top: 2px solid blue;
+  border-right: 2px solid blue;
+  border-top-right-radius: 50px;
+}
+
+.edge-middle {
+  background: linear-gradient(
+    to right,
+    transparent 2px,
+    blue 2px,
+    blue 4px,
+    transparent 4px
+  );
+}
+
+.edge-bottom-right {
+  margin: 0 4px 4px 0;
+  border-bottom: 2px solid blue;
+  border-right: 2px solid blue;
+  border-bottom-right-radius: 50px;
+}
+
+.edge-bottom-left {
+  margin: 0 0 4px 4px;
+  border-bottom: 2px solid blue;
+  border-left: 2px solid blue;
+  border-bottom-left-radius: 100px;
 }
