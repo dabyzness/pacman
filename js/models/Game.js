@@ -2,6 +2,8 @@ import { Tile } from "./Tile.js";
 import { Pacman } from "./Pacman.js";
 import { Ghost } from "./Ghost.js";
 
+const ghostNames = ["blinky", "pinky", "inky", "clyde"];
+
 export class Game {
   constructor(board, livesLeft) {
     this.board = board.map((row) =>
@@ -202,6 +204,11 @@ export class Game {
 
   isGhostTouching(tile) {
     if (["blinky", "pinky", "inky", "clyde"].includes(tile.classList[1])) {
+      if (tile.classList[3] === "killable") {
+        this.ghosts = this.ghosts.filter(
+          (ghost) => ghost.name != tile.classList[1]
+        );
+      }
       return true;
     }
 
@@ -211,6 +218,16 @@ export class Game {
   setPillTimer(value) {
     if (!this.pillTimer) {
       return;
+    }
+
+    if (this.pillTimer === 1) {
+      if (this.ghosts.length < 4) {
+        ghostNames.forEach((ghostName) => {
+          if (!this.ghosts.find((ghost) => ghost.name === ghostName)) {
+            this.ghosts.push(new Ghost(ghostName));
+          }
+        });
+      }
     }
 
     this.pillTimer += value;

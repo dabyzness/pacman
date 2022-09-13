@@ -153,6 +153,8 @@ const play = setInterval(() => {
     return;
   }
 
+  game.isGhostTouching(tiles[game.player.currPos[1][1]]);
+
   if (
     game.isGhostTouching(tiles[game.player.currPos[1][1]]) &&
     !game.pillTimer
