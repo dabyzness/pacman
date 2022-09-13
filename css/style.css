@@ -25,9 +25,29 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  color: white;
+  padding-top: 15px;
+  color: rgb(255, 185, 152);
+  font-size: 2rem;
+}
+
+.big-pill {
+  border: 1px solid rgb(255, 185, 152);
+  background-color: rgb(255, 185, 152);
+  border-radius: 50%;
+  transform: scale(150%);
+
+  animation-name: big-pill-pulse;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
 }
 
 .small-pill::after {
   content: ".";
+}
+
+@keyframes big-pill-pulse {
+  50% {
+    border: 1px solid white;
+    background-color: white;
+  }
 }

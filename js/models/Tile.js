@@ -1,4 +1,9 @@
-const valueToClassName = ["tile edge", "tile", "tile small-pill"];
+const valueToClassName = [
+  "tile edge",
+  "tile",
+  "tile small-pill",
+  "tile big-pill",
+];
 
 export class Tile {
   constructor(value) {

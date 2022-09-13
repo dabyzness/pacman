@@ -144,8 +144,8 @@ export class Game {
         break;
     }
 
-    if (tile.value === 2) {
-      this.increasePoints(10);
+    if (tile.value >= 2) {
+      this.increasePoints(tile.value);
       tile.setValue(1);
       this.pillsLeftOnBoard -= 1;
       this.isWinner();
@@ -193,8 +193,12 @@ export class Game {
     ghost.setDirection(choices[randomIndex][1]);
   }
 
-  increasePoints(points) {
-    this.points += points;
+  increasePoints(tileValue) {
+    if (tileValue === 2) {
+      this.points += 10;
+    } else if (tileValue === 3) {
+      this.points += 40;
+    }
   }
 
   isWinner() {

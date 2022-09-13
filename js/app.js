@@ -144,21 +144,31 @@ function renderGhost(ghosts) {
   });
 }
 
+let count = 0;
+
 setInterval(() => {
+  if (game.winner) {
+    return;
+  }
+
   if (!game.player.direction) {
     renderPos();
     renderGhost(game.ghosts);
     return;
   }
 
-  unRenderPos(game.player);
-
-  game.movePlayer();
-  game.ghosts.forEach((ghost) => {
-    unRenderPos(ghost);
-    game.moveGhost(ghost);
-  });
+  if (count === 3) {
+    unRenderPos(game.player);
+    game.movePlayer();
+    game.ghosts.forEach((ghost) => {
+      unRenderPos(ghost);
+      game.moveGhost(ghost);
+    });
+    count = 0;
+  } else {
+    count += 1;
+  }
 
   renderPos();
   renderGhost(game.ghosts);
-}, 100);
+}, 1000 / 60);
