@@ -145,6 +145,12 @@ function renderGhost(ghosts) {
 }
 
 setInterval(() => {
+  if (!game.player.direction) {
+    renderPos();
+    renderGhost(game.ghosts);
+    return;
+  }
+
   unRenderPos(game.player);
 
   game.movePlayer();

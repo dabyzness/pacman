@@ -172,8 +172,20 @@ export class Game {
         return;
       }
 
+      if (nextPos[2][1] === 1292) {
+        return;
+      }
       choices.push([nextPos, dir]);
     });
+
+    if (!choices.length) {
+      const onlyPos = ghost.currPos.map((row) =>
+        row.map((pos) => (ghost.direction === "left" ? pos + 53 : pos - 53))
+      );
+
+      ghost.setCurrPos(onlyPos);
+      return;
+    }
 
     const randomIndex = Math.floor(Math.random() * choices.length);
 
