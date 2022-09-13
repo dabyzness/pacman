@@ -211,6 +211,10 @@ export class Game {
     }
   }
 
+  changeLivesLeft(value) {
+    this.livesLeft += value;
+  }
+
   isWinner() {
     this.winner = this.pillsLeftOnBoard ? false : true;
   }
