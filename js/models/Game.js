@@ -20,6 +20,8 @@ export class Game {
     this.livesLeft = livesLeft;
     this.winner = false;
     this.gameOver = false;
+    this.pillTimer = 0;
+    this.ghostsEaten = [];
   }
 
   setInputs(input) {
@@ -147,6 +149,9 @@ export class Game {
     }
 
     if (tile.value >= 2) {
+      if (tile.value === 3) {
+        this.pillTimer = 300;
+      }
       this.increasePoints(tile.value);
       tile.setValue(1);
       this.pillsLeftOnBoard -= 1;
@@ -201,6 +206,14 @@ export class Game {
     }
 
     return false;
+  }
+
+  setPillTimer(value) {
+    if (!this.pillTimer) {
+      return;
+    }
+
+    this.pillTimer += value;
   }
 
   increasePoints(tileValue) {

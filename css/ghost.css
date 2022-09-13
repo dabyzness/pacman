@@ -251,3 +251,7 @@
     );
   }
 }
+
+.killable {
+  background-image: linear-gradient(to bottom, blue, blue);
+}

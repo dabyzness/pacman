@@ -36,7 +36,7 @@ const ghostLayout = [
   ["bloop-bottom-left", "bloop-bottom-center", "bloop-bottom-right"],
 ];
 
-const game = new Game(board, 3);
+const game = new Game(board, 2);
 renderMap();
 
 function init() {}
@@ -126,19 +126,21 @@ function unRenderPos(character) {
 }
 
 function renderGhost(ghosts) {
+  let canBeEaten = game.pillTimer ? "killable" : "";
+
   ghosts.forEach((ghost) => {
     ghost.currPos.forEach((pos, i) => {
       tiles[pos[1]].setAttribute(
         "class",
-        `tile ${ghost.name} ${ghostLayout[i][1]}`
+        `tile ${ghost.name} ${ghostLayout[i][1]} ${canBeEaten}`
       );
       tiles[pos[0]].setAttribute(
         "class",
-        `tile ${ghost.name} ${ghostLayout[i][0]}`
+        `tile ${ghost.name} ${ghostLayout[i][0]} ${canBeEaten}`
       );
       tiles[pos[2]].setAttribute(
         "class",
-        `tile ${ghost.name} ${ghostLayout[i][2]}`
+        `tile ${ghost.name} ${ghostLayout[i][2]} ${canBeEaten}`
       );
     });
   });
@@ -146,19 +148,26 @@ function renderGhost(ghosts) {
 
 let count = 0;
 
-setInterval(() => {
+const play = setInterval(() => {
   if (game.winner) {
     return;
   }
 
-  if (game.isGhostTouching(tiles[game.player.currPos[1][1]])) {
-    return;
+  if (
+    game.isGhostTouching(tiles[game.player.currPos[1][1]]) &&
+    !game.pillTimer
+  ) {
+    clearInterval(play);
   }
 
   if (!game.player.direction) {
     renderPos();
     renderGhost(game.ghosts);
     return;
+  }
+
+  if (game.pillTimer) {
+    game.setPillTimer(-1);
   }
 
   if (count === 3) {
@@ -176,3 +185,5 @@ setInterval(() => {
   renderPos();
   renderGhost(game.ghosts);
 }, 1000 / 60);
+
+play;
