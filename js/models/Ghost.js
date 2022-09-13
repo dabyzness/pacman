@@ -25,7 +25,7 @@ const clydeStart = [
 export class Ghost {
   constructor(name) {
     this.name = name;
-    this.direction = null;
+    this.direction = "left";
 
     switch (name) {
       case "blinky":
@@ -45,5 +45,40 @@ export class Ghost {
     }
 
     this.velocity = null;
+  }
+
+  setCurrPos(pos) {
+    this.currPos = pos;
+  }
+
+  setDirection(dir) {
+    this.direction = dir;
+  }
+
+  getNextPos(boardLength, dir) {
+    let nextPos = [];
+
+    switch (dir) {
+      case "up":
+        nextPos = this.currPos.map((row) =>
+          row.map((tileNo) => tileNo - boardLength)
+        );
+        break;
+      case "down":
+        nextPos = this.currPos.map((row) =>
+          row.map((tileNo) => tileNo + boardLength)
+        );
+        break;
+      case "left":
+        nextPos = this.currPos.map((row) => row.map((tileNo) => tileNo - 1));
+        break;
+      case "right":
+        nextPos = this.currPos.map((row) => row.map((tileNo) => tileNo + 1));
+        break;
+      default:
+        break;
+    }
+
+    return nextPos;
   }
 }

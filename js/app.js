@@ -86,6 +86,16 @@ function renderPos() {
       });
       break;
     default:
+      game.player.currPos.forEach((pos, i) => {
+        tiles[pos[1]].setAttribute("class", `tile ${pacmanLayoutLeft[i][1]}`);
+        tiles[pos[0]].setAttribute("class", `tile ${pacmanLayoutLeft[i][0]}`);
+        tiles[pos[2]].setAttribute("class", `tile ${pacmanLayoutLeft[i][2]}`);
+
+        tiles[pos[1]].style.animationName = "none";
+        tiles[pos[0]].style.animationName = "none";
+        tiles[pos[2]].style.animationName = "none";
+      });
+
       break;
   }
 }
@@ -137,6 +147,10 @@ function renderGhost(ghosts) {
 setInterval(() => {
   unRenderPos(game.player);
   game.movePlayer();
+  game.ghosts.forEach((ghost) => {
+    game.moveGhost(ghost);
+  });
+
   renderPos();
   renderGhost(game.ghosts);
 }, 100);

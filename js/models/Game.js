@@ -24,9 +24,9 @@ export class Game {
     this.inputs.push(input);
   }
 
-  isWallAhead(nextPos, character) {
-    let row = this.getTilesRowPosDir(nextPos, character.direction);
-    let col = this.getTilesColPosDir(nextPos, character.direction);
+  isWallAhead(nextPos, direction) {
+    let row = this.getTilesRowPosDir(nextPos, direction);
+    let col = this.getTilesColPosDir(nextPos, direction);
 
     for (let i = 0; i < row.length; i += 1) {
       if (!this.board[row[i]][col[i]].value) {
@@ -95,7 +95,7 @@ export class Game {
     }
     let nextPos = this.player.getNextPos(this.board[0].length, this.inputs);
 
-    if (this.isWallAhead(nextPos, this.player)) {
+    if (this.isWallAhead(nextPos, this.player.direction)) {
       const improvedPos = this.improvePlayerMovementHitBox(
         nextPos,
         this.player
@@ -150,6 +150,35 @@ export class Game {
       this.pillsLeftOnBoard -= 1;
       this.isWinner();
     }
+  }
+
+  moveGhost(ghost) {
+    const choices = [];
+
+    ["up", "down", "left", "right"].forEach((dir) => {
+      if (ghost.direction === "left" && dir === "right") {
+        return;
+      } else if (ghost.direction === "right" && dir === "left") {
+        return;
+      } else if (ghost.direction === "up" && dir === "down") {
+        return;
+      } else if (ghost.direction === "down" && dir === "up") {
+        return;
+      }
+
+      const nextPos = ghost.getNextPos(this.board[0].length, dir);
+
+      if (this.isWallAhead(nextPos, dir)) {
+        return;
+      }
+
+      choices.push([nextPos, dir]);
+    });
+
+    const randomIndex = Math.floor(Math.random() * choices.length);
+
+    ghost.setCurrPos(choices[randomIndex][0]);
+    ghost.setDirection(choices[randomIndex][1]);
   }
 
   increasePoints(points) {
