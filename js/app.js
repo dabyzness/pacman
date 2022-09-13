@@ -149,17 +149,18 @@ function renderGhost(ghosts) {
 let count = 0;
 
 const play = setInterval(() => {
+  console.log("SHAPOOPY");
+
   if (game.winner) {
     return;
   }
-
-  game.isGhostTouching(tiles[game.player.currPos[1][1]]);
 
   if (
     game.isGhostTouching(tiles[game.player.currPos[1][1]]) &&
     !game.pillTimer
   ) {
-    clearInterval(play);
+    onDeath();
+    return;
   }
 
   if (!game.player.direction) {
@@ -187,5 +188,36 @@ const play = setInterval(() => {
   renderPos();
   renderGhost(game.ghosts);
 }, 1000 / 60);
+
+function onDeath() {
+  game.winner = true;
+
+  game.ghostsEaten = [];
+  game.ghosts.forEach((ghost) => {
+    unRenderPos(ghost);
+    game.ghostsEaten.push(ghost.name);
+  });
+
+  renderPos(game.player);
+  game.ghosts = [];
+  game.ghostsEaten.forEach((ghostEaten) => {
+    game.respawnGhost(ghostEaten);
+  });
+  game.ghostsEaten = [];
+
+  setTimeout(() => {
+    unRenderPos(game.player);
+
+    // startInterval();
+  }, 2000);
+
+  setTimeout(() => {
+    game.respawnPlayer();
+    game.inputs = [];
+    renderGhost(game.ghosts);
+    renderPos(game.player);
+    game.winner = false;
+  }, 4000);
+}
 
 play;

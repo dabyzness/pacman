@@ -208,7 +208,31 @@ export class Game {
         this.ghosts = this.ghosts.filter(
           (ghost) => ghost.name != tile.classList[1]
         );
+        this.ghostsEaten.push(tile.classList[1]);
+
+        let pointValue;
+        switch (this.ghostsEaten.length) {
+          case 1:
+            pointValue = 200;
+            break;
+          case 2:
+            pointValue = 400;
+            break;
+          case 3:
+            pointValue = 800;
+            break;
+          case 4:
+            pointValue = 1600;
+            break;
+          default:
+            break;
+        }
+        this.increasePoints(pointValue);
+        console.log(pointValue);
+
+        return false;
       }
+
       return true;
     }
 
@@ -221,12 +245,12 @@ export class Game {
     }
 
     if (this.pillTimer === 1) {
-      if (this.ghosts.length < 4) {
-        ghostNames.forEach((ghostName) => {
-          if (!this.ghosts.find((ghost) => ghost.name === ghostName)) {
-            this.ghosts.push(new Ghost(ghostName));
-          }
+      if (this.ghostsEaten.length) {
+        this.ghostsEaten.forEach((ghostEaten) => {
+          this.respawnGhost(ghostEaten);
         });
+
+        this.ghostsEaten = [];
       }
     }
 
@@ -247,6 +271,14 @@ export class Game {
 
   isWinner() {
     this.winner = this.pillsLeftOnBoard ? false : true;
+  }
+
+  respawnGhost(name) {
+    this.ghosts.push(new Ghost(name));
+  }
+
+  respawnPlayer() {
+    this.player = new Pacman();
   }
 
   getTileRow(tileNo) {
