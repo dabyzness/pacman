@@ -50,10 +50,13 @@ export class Game {
     let totalValue = 0;
 
     for (let i = 0; i < row.length; i += 1) {
+      if (this.board[row[i]][col[i]].value < 1) {
+        continue;
+      }
       totalValue += this.board[row[i]][col[i]].value;
     }
 
-    if (totalValue < 2) {
+    if (totalValue <= 1) {
       return;
     }
 
