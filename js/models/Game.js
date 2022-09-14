@@ -35,7 +35,7 @@ export class Game {
     let col = this.getTilesColPosDir(nextPos, direction);
 
     for (let i = 0; i < row.length; i += 1) {
-      if (!this.board[row[i]][col[i]].value) {
+      if (this.board[row[i]][col[i]].value <= 0) {
         return true;
       }
     }
@@ -61,31 +61,31 @@ export class Game {
 
     switch (player.direction) {
       case "up":
-        if (!this.board[row[0]][col[0]].value) {
+        if (this.board[row[0]][col[0]].value <= 0) {
           improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo + 1));
         } else {
           improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo - 1));
         }
         break;
       case "down":
-        if (!this.board[row[0]][col[0]].value) {
+        if (this.board[row[0]][col[0]].value <= 0) {
           improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo + 1));
         } else {
           improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo - 1));
         }
         break;
       case "left":
-        if (!this.board[row[0]][col[0]].value) {
-          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo + 55));
+        if (this.board[row[0]][col[0]].value <= 0) {
+          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo + 57));
         } else {
-          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo - 55));
+          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo - 57));
         }
         break;
       case "right":
-        if (!this.board[row[0]][col[0]].value) {
-          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo + 55));
+        if (this.board[row[0]][col[0]].value <= 0) {
+          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo + 57));
         } else {
-          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo - 55));
+          improvedPos = nextPos.map((row) => row.map((tileNo) => tileNo - 57));
         }
         break;
       default:

@@ -99,3 +99,33 @@ body {
   border-left: 2px solid blue;
   border-bottom-left-radius: 100px;
 }
+
+@keyframes on-death-corners {
+  50% {
+    border-color: white;
+  }
+}
+
+@keyframes on-death-vert {
+  50% {
+    background: linear-gradient(
+      to right,
+      transparent 2px,
+      white 2px,
+      white 4px,
+      transparent 4px
+    );
+  }
+}
+
+@keyframes on-death-horiz {
+  50% {
+    background: linear-gradient(
+      to bottom,
+      transparent 2px,
+      white 2px,
+      white 4px,
+      transparent 4px
+    );
+  }
+}
