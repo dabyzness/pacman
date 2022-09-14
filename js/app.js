@@ -37,7 +37,7 @@ const ghostLayout = [
 ];
 
 const game = new Game(board, 2);
-renderMap();
+// renderMap();
 
 function init() {}
 
@@ -238,4 +238,4 @@ function onDeath() {
   }, 4000);
 }
 
-play;
+// play;
