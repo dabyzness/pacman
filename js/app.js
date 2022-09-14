@@ -126,7 +126,25 @@ function unRenderPos(character) {
 }
 
 function renderGhost(ghosts) {
-  let canBeEaten = game.pillTimer ? "killable" : "";
+  let canBeEaten;
+
+  if (game.pillTimer) {
+    if (game.pillTimer < 10) {
+      canBeEaten = "killable-blue";
+    } else if (game.pillTimer < 20) {
+      canBeEaten = "killable-white";
+    } else if (game.pillTimer < 30) {
+      canBeEaten = "killable-blue";
+    } else if (game.pillTimer < 40) {
+      canBeEaten = "killable-white";
+    } else if (game.pillTimer < 50) {
+      canBeEaten = "killable-blue";
+    } else if (game.pillTimer <= 60) {
+      canBeEaten = "killable-white";
+    } else {
+      canBeEaten = "killable-blue";
+    }
+  }
 
   ghosts.forEach((ghost) => {
     ghost.currPos.forEach((pos, i) => {

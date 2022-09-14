@@ -207,7 +207,10 @@ export class Game {
 
   isGhostTouching(tile) {
     if (["blinky", "pinky", "inky", "clyde"].includes(tile.classList[1])) {
-      if (tile.classList[3] === "killable") {
+      if (
+        tile.classList[3] === "killable-blue" ||
+        tile.classList[3] === "killable-white"
+      ) {
         this.ghosts = this.ghosts.filter(
           (ghost) => ghost.name != tile.classList[1]
         );

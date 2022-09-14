@@ -252,6 +252,10 @@
   }
 }
 
-.killable {
+.killable-blue {
   background-image: linear-gradient(to bottom, blue, blue);
+}
+
+.killable-white {
+  background-image: linear-gradient(to bottom, white, white);
 }
