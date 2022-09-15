@@ -3,8 +3,10 @@ import { Game } from "./models/Game.js";
 
 const grid = document.getElementById("game");
 const startScreen = document.getElementById("start-screen");
-const startScreenPos = document.getElementById("pacman-controller");
+const endScreen = document.getElementById("end-screen");
+let startScreenPos;
 let tiles;
+let playInterval;
 
 const startScreenGridRowCont = ["35 / 38", "40 / 43", "47 / 50"];
 let startScreenGridRowPos = 0;
@@ -43,10 +45,100 @@ const ghostLayout = [
 
 let game;
 
-game = new Game(board, 2);
-renderMap();
+// game = new Game(board, 2);
+// renderMap();
 
-function init() {}
+init();
+
+function init() {
+  renderStartScreen(startScreen);
+  startScreenPos = document.getElementById("pacman-controller");
+}
+
+function renderStartScreen(startScreen) {
+  grid.style.display = "none";
+  endScreen.style.display = "none";
+
+  startScreen.innerHTML = `<img src="./assets/svg/Pac-Man.svg" alt="" />
+
+  <div id="big-pill" class="big-pill"></div>
+
+  <div id="pacman">
+    <div class="bottom-right dir-left"></div>
+    <div class="bottom-center dir-left"></div>
+    <div class="bottom-left dir-left"></div>
+    <div class="middle-right dir-left"></div>
+    <div class="middle-center dir-left"></div>
+    <div class="middle-left dir-left"></div>
+    <div class="top-right dir-left"></div>
+    <div class="top-center dir-left"></div>
+    <div class="top-left dir-left"></div>
+  </div>
+
+  <div id="blinky-start">
+    <div class="blinky bloop-top-left"></div>
+    <div class="blinky bloop-top-center"></div>
+    <div class="blinky bloop-top-right"></div>
+    <div class="blinky bloop-middle-left"></div>
+    <div class="blinky bloop-middle-center"></div>
+    <div class="blinky bloop-middle-right"></div>
+    <div class="blinky bloop-bottom-left"></div>
+    <div class="blinky bloop-bottom-center"></div>
+    <div class="blinky bloop-bottom-right"></div>
+  </div>
+
+  <div id="pinky-start">
+    <div class="pinky bloop-top-left"></div>
+    <div class="pinky bloop-top-center"></div>
+    <div class="pinky bloop-top-right"></div>
+    <div class="pinky bloop-middle-left"></div>
+    <div class="pinky bloop-middle-center"></div>
+    <div class="pinky bloop-middle-right"></div>
+    <div class="pinky bloop-bottom-left"></div>
+    <div class="pinky bloop-bottom-center"></div>
+    <div class="pinky bloop-bottom-right"></div>
+  </div>
+
+  <div id="inky-start">
+    <div class="inky bloop-top-left"></div>
+    <div class="inky bloop-top-center"></div>
+    <div class="inky bloop-top-right"></div>
+    <div class="inky bloop-middle-left"></div>
+    <div class="inky bloop-middle-center"></div>
+    <div class="inky bloop-middle-right"></div>
+    <div class="inky bloop-bottom-left"></div>
+    <div class="inky bloop-bottom-center"></div>
+    <div class="inky bloop-bottom-right"></div>
+  </div>
+
+  <div id="clyde-start">
+    <div class="clyde bloop-top-left"></div>
+    <div class="clyde bloop-top-center"></div>
+    <div class="clyde bloop-top-right"></div>
+    <div class="clyde bloop-middle-left"></div>
+    <div class="clyde bloop-middle-center"></div>
+    <div class="clyde bloop-middle-right"></div>
+    <div class="clyde bloop-bottom-left"></div>
+    <div class="clyde bloop-bottom-center"></div>
+    <div class="clyde bloop-bottom-right"></div>
+  </div>
+
+  <div id="pacman-controller">
+    <div class="top-left"></div>
+    <div class="top-center"></div>
+    <div class="top-right"></div>
+    <div class="middle-left"></div>
+    <div class="middle-center"></div>
+    <div class="middle-right"></div>
+    <div class="bottom-left"></div>
+    <div class="bottom-center"></div>
+    <div class="bottom-right"></div>
+  </div>
+
+  <div id="start">START</div>
+  <div id="controls">CONTROLS</div>
+  <div id="high-scores">HIGH SCORES</div>`;
+}
 
 function renderMap() {
   game.board.forEach((row) => {
@@ -107,6 +199,49 @@ function renderPos() {
   }
 }
 
+function startPlayInterval() {
+  play = setInterval(() => {
+    console.log("SHAPOOPY");
+
+    if (game.winner) {
+      return;
+    }
+
+    if (
+      game.isGhostTouching(tiles[game.player.currPos[1][1]]) &&
+      !game.pillTimer
+    ) {
+      onDeath();
+      return;
+    }
+
+    if (!game.player.direction) {
+      renderPos();
+      renderGhost(game.ghosts);
+      return;
+    }
+
+    if (game.pillTimer) {
+      game.setPillTimer(-1);
+    }
+
+    if (count === 3) {
+      unRenderPos(game.player);
+      game.movePlayer();
+      game.ghosts.forEach((ghost) => {
+        unRenderPos(ghost);
+        game.moveGhost(ghost);
+      });
+      count = 0;
+    } else {
+      count += 1;
+    }
+
+    renderPos();
+    renderGhost(game.ghosts);
+  }, 1000 / 60);
+}
+
 window.addEventListener("keydown", ({ key }) => {
   if (!possibleMovements.includes(key)) {
     return;
@@ -116,11 +251,13 @@ window.addEventListener("keydown", ({ key }) => {
   if (!game) {
     if (key === "ArrowRight" && startScreenGridRowPos === 0) {
       startScreen.style.display = "none";
+      grid.style.display = "grid";
       // Request Animation Frame --> Scroll Over YADDA YADDA
       // SetTimeout for length of animation frame;
       // At Timeout START GAME
       game = new Game(board, 3);
       renderMap();
+      startPlayInterval();
       return;
     }
 
@@ -209,46 +346,46 @@ let count = 0;
 
 // SET INTERVAL VERY NECESSARY FOR GAMEPLAY;
 
-const play = setInterval(() => {
-  console.log("SHAPOOPY");
+// const play = setInterval(() => {
+//   console.log("SHAPOOPY");
 
-  if (game.winner) {
-    return;
-  }
+//   if (game.winner) {
+//     return;
+//   }
 
-  if (
-    game.isGhostTouching(tiles[game.player.currPos[1][1]]) &&
-    !game.pillTimer
-  ) {
-    onDeath();
-    return;
-  }
+//   if (
+//     game.isGhostTouching(tiles[game.player.currPos[1][1]]) &&
+//     !game.pillTimer
+//   ) {
+//     onDeath();
+//     return;
+//   }
 
-  if (!game.player.direction) {
-    renderPos();
-    renderGhost(game.ghosts);
-    return;
-  }
+//   if (!game.player.direction) {
+//     renderPos();
+//     renderGhost(game.ghosts);
+//     return;
+//   }
 
-  if (game.pillTimer) {
-    game.setPillTimer(-1);
-  }
+//   if (game.pillTimer) {
+//     game.setPillTimer(-1);
+//   }
 
-  if (count === 3) {
-    unRenderPos(game.player);
-    game.movePlayer();
-    game.ghosts.forEach((ghost) => {
-      unRenderPos(ghost);
-      game.moveGhost(ghost);
-    });
-    count = 0;
-  } else {
-    count += 1;
-  }
+//   if (count === 3) {
+//     unRenderPos(game.player);
+//     game.movePlayer();
+//     game.ghosts.forEach((ghost) => {
+//       unRenderPos(ghost);
+//       game.moveGhost(ghost);
+//     });
+//     count = 0;
+//   } else {
+//     count += 1;
+//   }
 
-  renderPos();
-  renderGhost(game.ghosts);
-}, 1000 / 60);
+//   renderPos();
+//   renderGhost(game.ghosts);
+// }, 1000 / 60);
 
 function onDeath() {
   game.winner = true;
