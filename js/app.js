@@ -4,20 +4,11 @@ import { Game } from "./models/Game.js";
 const grid = document.getElementById("game");
 const startScreen = document.getElementById("start-screen");
 const endScreen = document.getElementById("end-screen");
-// const introEndAudio = document.createElement("audio");
-// introEndAudio.src = "../assets/audio/pacman_intermission.wav";
-// introEndAudio.setAttribute("loop", true);
 
-const startAudio = document.getElementById("gameStart");
+const startAudio = new Audio("../assets/audio/pacman_beginning.wav");
 const ghostEatAudio = new Audio("../assets/audio/pacman_killghost.m4r");
 const deathAudio = new Audio("../assets/audio/pacman_death.wav");
 
-// ghostEatAudio.play();
-
-// wakkawakka.loop = "true";
-// wakkawakka.playbackRate = 2;
-
-// const siren = new Audio("../assets/audio/pacman_siren.mp3");
 ghostEatAudio.addEventListener("timeupdate", ({ target }) => {
   var buffer = 0.4;
   if (target.currentTime > target.duration - buffer) {
@@ -26,12 +17,8 @@ ghostEatAudio.addEventListener("timeupdate", ({ target }) => {
   }
 });
 
-// startAudio.setAttribute("preload", "metadata");
-// startAudio.src = "../assets/audio/pacman_beginning.wav";
-
-// startAudio.setAttribute("loop", "true");
-// startAudio.play();
-let prevPoints = 0;
+let controlsModal;
+let highScoreModal;
 let startScreenPos;
 let tiles;
 let playInterval;
@@ -106,7 +93,12 @@ init();
 function init() {
   renderStartScreen(startScreen);
   startScreenPos = document.getElementById("pacman-controller");
-  // introEndAudio.play();
+  controlsModal = new bootstrap.Modal(
+    document.getElementById("controls-modal")
+  );
+  highScoreModal = new bootstrap.Modal(
+    document.getElementById("high-score-modal")
+  );
 }
 
 function renderStartScreen(startScreen) {
@@ -192,7 +184,53 @@ function renderStartScreen(startScreen) {
 
   <div id="start">START</div>
   <div id="controls">CONTROLS</div>
-  <div id="high-scores">HIGH SCORES</div>`;
+  <div id="high-scores">HIGH SCORES</div>
+  <div class="modal" id="controls-modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Controls/Rules</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p> Use the arrow keys to move around the game board to eat the pellets and evade the ghosts. On the start/end screens press the right arrow key to make your selection.
+          </p>
+          <p>Collect all of the snack pellets to win.</p>
+          <p>If the ghosts touch you, you will lose a life and return to the original start position.
+            If you run out of lives, it is game over.</p>
+            <p>Eating the large snack pellet will grant you 5 seconds of invulnerability
+            During this time, you may eat the ghosts. This will cause the ghosts to despawn.
+            Ghosts will respawn inside of the center box immediately following the end of the 5 seconds.
+            </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="high-score-modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">High Scores</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ${highScoreList.reduce((prev, highScore) => {
+            prev += `<p>${highScore[0]}   ${highScore[1]}</p>`;
+            return prev;
+          }, "")}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+`;
 }
 
 function renderMap() {
@@ -328,6 +366,14 @@ window.addEventListener("keydown", ({ key }) => {
       startAudio.play();
       startPlayInterval();
       return;
+    }
+
+    if (key === "ArrowRight" && startScreenGridRowPos === 1) {
+      controlsModal.show();
+    }
+
+    if (key === "ArrowRight" && startScreenGridRowPos === 2) {
+      highScoreModal.show();
     }
 
     if (key === "ArrowUp") {
@@ -601,18 +647,23 @@ function onDeath() {
       grid.innerHTML = "";
       clearInterval(playInterval);
 
-      let highestScore = game.points;
-      if (highScoreList.length) {
-        highestScore = highScoreList[0][1];
-      }
+      highScoreList.sort((a, b) => {
+        if (a[1] > b[1]) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+      console.log(highScoreList);
 
-      renderEndScreen(endScreen, game.points, highestScore);
+      renderEndScreen(endScreen, game.points, highScoreList[0][1]);
       left = document.getElementById("first");
       middle = document.getElementById("second");
       right = document.getElementById("third");
       highScoreInp = [left, middle, right];
       return;
     }
+
     game.respawnPlayer();
     game.inputs = [];
     renderGhost(game.ghosts);
