@@ -10,6 +10,7 @@ let playInterval;
 let left, middle, right;
 let highScoreInp;
 let currPos = 0;
+const highScoreList = [];
 
 const startScreenGridRowCont = ["35 / 38", "40 / 43", "47 / 50"];
 let startScreenGridRowPos = 0;
@@ -210,11 +211,15 @@ function startPlayInterval() {
       return;
     }
 
+    if (game.player.isDead) {
+      return;
+    }
+
     if (game.winner) {
       grid.innerHTML = "";
       game = new Game(board, game.livesLeft);
       renderMap();
-      clearInterval(playInterval);
+
       return;
     }
 
@@ -268,7 +273,7 @@ window.addEventListener("keydown", ({ key }) => {
       // Request Animation Frame --> Scroll Over YADDA YADDA
       // SetTimeout for length of animation frame;
       // At Timeout START GAME
-      game = new Game(board, 0);
+      game = new Game(board, 2);
       renderMap();
       startPlayInterval();
       return;
@@ -316,6 +321,7 @@ window.addEventListener("keydown", ({ key }) => {
       if (currPos > 2) {
         currPos = 0;
         renderStartScreen(startScreen);
+        startScreenPos = document.getElementById("pacman-controller");
       }
     }
     return;
@@ -498,7 +504,7 @@ function renderEndScreen(endScreen, points, highestScore) {
 }
 
 function onDeath() {
-  game.winner = true;
+  game.player.isDead = true;
   game.changeLivesLeft(-1);
 
   game.ghostsEaten = [];
@@ -536,7 +542,7 @@ function onDeath() {
     game.inputs = [];
     renderGhost(game.ghosts);
     renderPos(game.player);
-    game.winner = false;
+    game.player.isDead = false;
   }, 4000);
 }
 

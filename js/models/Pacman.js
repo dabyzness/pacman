@@ -8,7 +8,7 @@ export class Pacman {
   constructor() {
     this.direction = null;
     this.currPos = startPosition;
-    this.velocity = null;
+    this.isDead = false;
   }
 
   setDirection(dir) {
