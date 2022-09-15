@@ -43,8 +43,8 @@ const ghostLayout = [
 
 let game;
 
-// const game = new Game(board, 2);
-// renderMap();
+game = new Game(board, 2);
+renderMap();
 
 function init() {}
 
@@ -209,46 +209,46 @@ let count = 0;
 
 // SET INTERVAL VERY NECESSARY FOR GAMEPLAY;
 
-// const play = setInterval(() => {
-//   console.log("SHAPOOPY");
+const play = setInterval(() => {
+  console.log("SHAPOOPY");
 
-//   if (game.winner) {
-//     return;
-//   }
+  if (game.winner) {
+    return;
+  }
 
-//   if (
-//     game.isGhostTouching(tiles[game.player.currPos[1][1]]) &&
-//     !game.pillTimer
-//   ) {
-//     onDeath();
-//     return;
-//   }
+  if (
+    game.isGhostTouching(tiles[game.player.currPos[1][1]]) &&
+    !game.pillTimer
+  ) {
+    onDeath();
+    return;
+  }
 
-//   if (!game.player.direction) {
-//     renderPos();
-//     renderGhost(game.ghosts);
-//     return;
-//   }
+  if (!game.player.direction) {
+    renderPos();
+    renderGhost(game.ghosts);
+    return;
+  }
 
-//   if (game.pillTimer) {
-//     game.setPillTimer(-1);
-//   }
+  if (game.pillTimer) {
+    game.setPillTimer(-1);
+  }
 
-//   if (count === 3) {
-//     unRenderPos(game.player);
-//     game.movePlayer();
-//     game.ghosts.forEach((ghost) => {
-//       unRenderPos(ghost);
-//       game.moveGhost(ghost);
-//     });
-//     count = 0;
-//   } else {
-//     count += 1;
-//   }
+  if (count === 3) {
+    unRenderPos(game.player);
+    game.movePlayer();
+    game.ghosts.forEach((ghost) => {
+      unRenderPos(ghost);
+      game.moveGhost(ghost);
+    });
+    count = 0;
+  } else {
+    count += 1;
+  }
 
-//   renderPos();
-//   renderGhost(game.ghosts);
-// }, 1000 / 60);
+  renderPos();
+  renderGhost(game.ghosts);
+}, 1000 / 60);
 
 function onDeath() {
   game.winner = true;
