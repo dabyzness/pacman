@@ -4,18 +4,37 @@ import { Game } from "./models/Game.js";
 const grid = document.getElementById("game");
 const startScreen = document.getElementById("start-screen");
 const endScreen = document.getElementById("end-screen");
+// const introEndAudio = document.createElement("audio");
+// introEndAudio.src = "../assets/audio/pacman_intermission.wav";
+// introEndAudio.setAttribute("loop", true);
+
+const startAudio = document.getElementById("gameStart");
+startAudio.play();
+// startAudio.setAttribute("preload", "metadata");
+// startAudio.src = "../assets/audio/pacman_beginning.wav";
+
+// startAudio.setAttribute("loop", "true");
+// startAudio.play();
+
 let startScreenPos;
 let tiles;
 let playInterval;
 let left, middle, right;
 let highScoreInp;
 let currPos = 0;
-const highScoreList = [];
+const highScoreList = [
+  ["ALX", 5000],
+  ["BEN", 5000],
+  ["DAV", 5000],
+  ["HUN", 5000],
+  ["IAN", 5000],
+  ["JOE", 5000],
+];
 
 const startScreenGridRowCont = ["35 / 38", "40 / 43", "47 / 50"];
 let startScreenGridRowPos = 0;
 
-const possibleMovements = ["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"];
+let possibleMovements = ["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"];
 
 const pacmanLayoutRight = [
   ["top-left", "top-center", "top-right"],
@@ -47,16 +66,24 @@ const ghostLayout = [
   ["bloop-bottom-left", "bloop-bottom-center", "bloop-bottom-right"],
 ];
 
-let game;
+startAudio.addEventListener("playing", () => {
+  possibleMovements = [];
+});
 
-// game = new Game(board, 2);
-// renderMap();
+startAudio.addEventListener("ended", () => {
+  console.log("MY BIG FAT TITTIES");
+  possibleMovements = ["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"];
+  game.player.direction = "left";
+});
+
+let game;
 
 init();
 
 function init() {
   renderStartScreen(startScreen);
   startScreenPos = document.getElementById("pacman-controller");
+  // introEndAudio.play();
 }
 
 function renderStartScreen(startScreen) {
@@ -219,6 +246,7 @@ function startPlayInterval() {
       grid.innerHTML = "";
       game = new Game(board, game.livesLeft);
       renderMap();
+      startAudio.play();
 
       return;
     }
@@ -275,6 +303,7 @@ window.addEventListener("keydown", ({ key }) => {
       // At Timeout START GAME
       game = new Game(board, 2);
       renderMap();
+      startAudio.play();
       startPlayInterval();
       return;
     }
@@ -321,6 +350,12 @@ window.addEventListener("keydown", ({ key }) => {
       if (currPos > 2) {
         currPos = 0;
         renderStartScreen(startScreen);
+        highScoreList.push([
+          highScoreInp[0].textContent +
+            highScoreInp[1].textContent +
+            highScoreInp[2].textContent,
+          game.points,
+        ]);
         startScreenPos = document.getElementById("pacman-controller");
       }
     }
@@ -522,8 +557,6 @@ function onDeath() {
 
   setTimeout(() => {
     unRenderPos(game.player);
-
-    // startInterval();
   }, 2000);
 
   setTimeout(() => {
@@ -531,7 +564,13 @@ function onDeath() {
       grid.style.display = "none";
       grid.innerHTML = "";
       clearInterval(playInterval);
-      renderEndScreen(endScreen, game.points, 12345);
+
+      let highestScore = game.points;
+      if (highScoreList.length) {
+        highestScore = highScoreList[0][1];
+      }
+
+      renderEndScreen(endScreen, game.points, highestScore);
       left = document.getElementById("first");
       middle = document.getElementById("second");
       right = document.getElementById("third");
@@ -545,5 +584,3 @@ function onDeath() {
     game.player.isDead = false;
   }, 4000);
 }
-
-// play;
