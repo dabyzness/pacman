@@ -9,13 +9,29 @@ const endScreen = document.getElementById("end-screen");
 // introEndAudio.setAttribute("loop", true);
 
 const startAudio = document.getElementById("gameStart");
-startAudio.play();
+const ghostEatAudio = new Audio("../assets/audio/pacman_killghost.m4r");
+const deathAudio = new Audio("../assets/audio/pacman_death.wav");
+
+// ghostEatAudio.play();
+
+// wakkawakka.loop = "true";
+// wakkawakka.playbackRate = 2;
+
+// const siren = new Audio("../assets/audio/pacman_siren.mp3");
+ghostEatAudio.addEventListener("timeupdate", ({ target }) => {
+  var buffer = 0.4;
+  if (target.currentTime > target.duration - buffer) {
+    target.currentTime = 0.1;
+    target.play();
+  }
+});
+
 // startAudio.setAttribute("preload", "metadata");
 // startAudio.src = "../assets/audio/pacman_beginning.wav";
 
 // startAudio.setAttribute("loop", "true");
 // startAudio.play();
-
+let prevPoints = 0;
 let startScreenPos;
 let tiles;
 let playInterval;
@@ -64,6 +80,13 @@ const ghostLayout = [
   ["bloop-top-left", "bloop-top-center", "bloop-top-right"],
   ["bloop-middle-left", "bloop-middle-center", "bloop-middle-right"],
   ["bloop-bottom-left", "bloop-bottom-center", "bloop-bottom-right"],
+];
+
+const edgeCornerNames = [
+  "tile edge-top-left",
+  "tile edge-top-right",
+  "tile edge-bottom-left",
+  "tile edge-bottom-right",
 ];
 
 startAudio.addEventListener("playing", () => {
@@ -293,7 +316,6 @@ window.addEventListener("keydown", ({ key }) => {
 
   // Start Screen Controls
   if (startScreen.style.display === "grid") {
-    console.log("HELLO");
     if (key === "ArrowRight" && startScreenGridRowPos === 0) {
       startScreen.innerHTML = "";
       startScreen.style.display = "none";
@@ -386,6 +408,7 @@ function renderGhost(ghosts) {
   let canBeEaten;
 
   if (game.pillTimer) {
+    ghostEatAudio.play();
     if (game.pillTimer < 10) {
       canBeEaten = "killable-blue";
     } else if (game.pillTimer < 20) {
@@ -401,6 +424,8 @@ function renderGhost(ghosts) {
     } else {
       canBeEaten = "killable-blue";
     }
+  } else {
+    ghostEatAudio.pause();
   }
 
   ghosts.forEach((ghost) => {
@@ -554,6 +579,17 @@ function onDeath() {
     game.respawnGhost(ghostEaten);
   });
   game.ghostsEaten = [];
+  deathAudio.play();
+
+  tiles.forEach((tile) => {
+    if (edgeCornerNames.includes(tile.classList.value)) {
+      tile.style.animation = ".5s on-death-corners infinite";
+    } else if (tile.classList.value === "tile edge-top") {
+      tile.style.animation = ".5s on-death-horiz infinite";
+    } else if (tile.classList.value === "tile edge-middle") {
+      tile.style.animation = ".5s on-death-vert infinite";
+    }
+  });
 
   setTimeout(() => {
     unRenderPos(game.player);
@@ -581,6 +617,16 @@ function onDeath() {
     game.inputs = [];
     renderGhost(game.ghosts);
     renderPos(game.player);
+    tiles.forEach((tile) => {
+      if (edgeCornerNames.includes(tile.classList.value)) {
+        tile.style.animation = "";
+      } else if (tile.classList.value === "tile edge-top") {
+        tile.style.animation = "";
+      } else if (tile.classList.value === "tile edge-middle") {
+        tile.style.animation = "";
+      }
+    });
+    startAudio.play();
     game.player.isDead = false;
-  }, 4000);
+  }, 3000);
 }
