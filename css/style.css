@@ -243,9 +243,9 @@ img {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  padding-top: 15px;
+  /* padding-top: 15px; */
   color: rgb(255, 185, 152);
-  font-size: 2rem;
+  font-size: 1rem;
 }
 
 .big-pill {

@@ -1,8 +1,13 @@
 import { board } from "../data/board.js";
 import { Game } from "./models/Game.js";
 
-const grid = document.querySelector(".grid");
+const grid = document.getElementById("game");
+const startScreen = document.getElementById("start-screen");
+const startScreenPos = document.getElementById("pacman-controller");
 let tiles;
+
+const startScreenGridRowCont = ["35 / 38", "40 / 43", "47 / 50"];
+let startScreenGridRowPos = 0;
 
 const possibleMovements = ["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"];
 
@@ -36,7 +41,9 @@ const ghostLayout = [
   ["bloop-bottom-left", "bloop-bottom-center", "bloop-bottom-right"],
 ];
 
-const game = new Game(board, 2);
+let game;
+
+// const game = new Game(board, 2);
 // renderMap();
 
 function init() {}
@@ -105,6 +112,40 @@ window.addEventListener("keydown", ({ key }) => {
     return;
   }
 
+  // Start Screen Controls
+  if (!game) {
+    if (key === "ArrowRight" && startScreenGridRowPos === 0) {
+      startScreen.style.display = "none";
+      // Request Animation Frame --> Scroll Over YADDA YADDA
+      // SetTimeout for length of animation frame;
+      // At Timeout START GAME
+      game = new Game(board, 3);
+      renderMap();
+      return;
+    }
+
+    if (key === "ArrowUp") {
+      startScreenGridRowPos -= 1;
+    } else if (key === "ArrowDown") {
+      startScreenGridRowPos += 1;
+    }
+
+    switch (startScreenGridRowPos) {
+      case -1:
+        startScreenGridRowPos = 0;
+        break;
+      case 3:
+        startScreenGridRowPos = 2;
+        break;
+      default:
+        startScreenPos.style.gridRow =
+          startScreenGridRowCont[startScreenGridRowPos];
+        break;
+    }
+
+    return;
+  }
+
   game.setInputs(key.replace("Arrow", "").toLowerCase());
 
   if (!game.player.direction) {
@@ -166,46 +207,48 @@ function renderGhost(ghosts) {
 
 let count = 0;
 
-const play = setInterval(() => {
-  console.log("SHAPOOPY");
+// SET INTERVAL VERY NECESSARY FOR GAMEPLAY;
 
-  if (game.winner) {
-    return;
-  }
+// const play = setInterval(() => {
+//   console.log("SHAPOOPY");
 
-  if (
-    game.isGhostTouching(tiles[game.player.currPos[1][1]]) &&
-    !game.pillTimer
-  ) {
-    onDeath();
-    return;
-  }
+//   if (game.winner) {
+//     return;
+//   }
 
-  if (!game.player.direction) {
-    renderPos();
-    renderGhost(game.ghosts);
-    return;
-  }
+//   if (
+//     game.isGhostTouching(tiles[game.player.currPos[1][1]]) &&
+//     !game.pillTimer
+//   ) {
+//     onDeath();
+//     return;
+//   }
 
-  if (game.pillTimer) {
-    game.setPillTimer(-1);
-  }
+//   if (!game.player.direction) {
+//     renderPos();
+//     renderGhost(game.ghosts);
+//     return;
+//   }
 
-  if (count === 3) {
-    unRenderPos(game.player);
-    game.movePlayer();
-    game.ghosts.forEach((ghost) => {
-      unRenderPos(ghost);
-      game.moveGhost(ghost);
-    });
-    count = 0;
-  } else {
-    count += 1;
-  }
+//   if (game.pillTimer) {
+//     game.setPillTimer(-1);
+//   }
 
-  renderPos();
-  renderGhost(game.ghosts);
-}, 1000 / 60);
+//   if (count === 3) {
+//     unRenderPos(game.player);
+//     game.movePlayer();
+//     game.ghosts.forEach((ghost) => {
+//       unRenderPos(ghost);
+//       game.moveGhost(ghost);
+//     });
+//     count = 0;
+//   } else {
+//     count += 1;
+//   }
+
+//   renderPos();
+//   renderGhost(game.ghosts);
+// }, 1000 / 60);
 
 function onDeath() {
   game.winner = true;
