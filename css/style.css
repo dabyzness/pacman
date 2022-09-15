@@ -25,6 +25,11 @@ body {
 }
 
 /* Start Screen CSS */
+#start-screen {
+  /* TEMPORARY */
+  /* display: none; */
+}
+
 img {
   width: 100%;
   grid-row: 10 / 20;
@@ -48,7 +53,8 @@ img {
   grid-template-columns: repeat(3, 8px);
 }
 
-#blinky {
+#blinky-start,
+#blinky-end {
   grid-row: 24 / 27;
   grid-column: 25 / 28;
 
@@ -56,7 +62,8 @@ img {
   grid-template-columns: repeat(3, 8px);
 }
 
-#pinky {
+#pinky-start,
+#pinky-end {
   grid-row: 24 / 27;
   grid-column: 30 / 33;
 
@@ -64,7 +71,8 @@ img {
   grid-template-columns: repeat(3, 8px);
 }
 
-#inky {
+#inky-start,
+#inky-end {
   grid-row: 24 / 27;
   grid-column: 35 / 38;
 
@@ -72,7 +80,8 @@ img {
   grid-template-columns: repeat(3, 8px);
 }
 
-#clyde {
+#clyde-start,
+#clyde-end {
   grid-row: 24 / 27;
   grid-column: 40 / 43;
 
@@ -101,6 +110,133 @@ img {
 #high-scores {
   grid-row: 45 / 48;
   grid-column: 27;
+}
+
+/* END SCREEN STYLING */
+#final-score {
+  grid-row: 1;
+  grid-column: 7;
+}
+
+#highest-score {
+  grid-row: 1;
+  grid-column: 30 / 50;
+}
+
+#header-end {
+  grid-row: 8/ 11;
+  grid-column: 13 / 55;
+}
+
+#blinky-end {
+  grid-row: 13/ 16;
+  grid-column: 7 / 10;
+}
+
+#blinky-real-name {
+  color: rgb(255, 0, 0);
+  grid-row: 13/ 16;
+  grid-column: 13 / 30;
+}
+
+#blinky-nickname {
+  color: rgb(255, 0, 0);
+  grid-row: 13/ 16;
+  grid-column: 37 / 57;
+}
+
+#pinky-end {
+  grid-row: 18/ 21;
+  grid-column: 7 / 10;
+}
+
+#pinky-real-name {
+  color: rgb(255, 184, 255);
+  grid-row: 18/ 21;
+  grid-column: 13 / 30;
+}
+
+#pinky-nickname {
+  color: rgb(255, 184, 255);
+  grid-row: 18/ 21;
+  grid-column: 37 / 57;
+}
+
+#inky-end {
+  grid-row: 23/ 26;
+  grid-column: 7 / 10;
+}
+
+#inky-real-name {
+  color: rgb(0, 255, 255);
+  grid-row: 23/ 26;
+  grid-column: 13 / 30;
+}
+
+#inky-nickname {
+  color: rgb(0, 255, 255);
+  grid-row: 23/ 26;
+  grid-column: 37 / 57;
+}
+
+#clyde-end {
+  grid-row: 28 / 31;
+  grid-column: 7 / 10;
+}
+
+#clyde-real-name {
+  color: rgb(255, 184, 81);
+  grid-row: 28 / 31;
+  grid-column: 13 / 30;
+}
+#clyde-nickname {
+  color: rgb(255, 184, 81);
+  grid-row: 28 / 31;
+  grid-column: 37 / 57;
+}
+
+#first {
+  font-size: 5rem;
+  grid-row: 32;
+  grid-column: 12;
+
+  animation: 1s flashing-letter infinite;
+}
+
+#second {
+  font-size: 5rem;
+  grid-row: 32;
+  grid-column: 24;
+  animation: 1s flashing-letter infinite;
+}
+
+#third {
+  font-size: 5rem;
+  grid-row: 32;
+  grid-column: 36;
+  animation: 1s flashing-letter infinite;
+}
+
+#enter-score {
+  grid-row: 46 / 49;
+  grid-column: 14/ 49;
+}
+
+#copyright {
+  color: rgb(254, 184, 254);
+  grid-row: 55 / 58;
+  grid-column: 8/ 49;
+}
+
+#remaining-credits {
+  grid-row: 59 / 62;
+  grid-column: 7 / 57;
+}
+
+@keyframes flashing-letter {
+  50% {
+    color: gold;
+  }
 }
 
 .small-pill {

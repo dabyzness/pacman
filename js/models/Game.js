@@ -267,7 +267,7 @@ export class Game {
     if (tileValue === 2) {
       this.points += 10;
     } else if (tileValue === 3) {
-      this.points += 40;
+      this.points += 50;
     }
   }
 
