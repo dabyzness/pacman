@@ -12,6 +12,7 @@ body {
   align-items: center;
   font-family: emulogic;
   color: white;
+  height: 100vh;
 }
 
 #game-container {
