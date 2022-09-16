@@ -10,18 +10,25 @@ body {
   background-color: black;
   justify-content: center;
   align-items: center;
-  /* background: url("../assets/img/bezel.jpg") no-repeat;
-  background-size: cover; */
   font-family: emulogic;
   color: white;
 }
 
+#game-container {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(57, 8px);
+  grid-template-rows: repeat(72, 8px);
+}
+
 .grid {
+  grid-row: 7 / 70;
+  grid-column: 0 / 57;
+
   margin: 0;
   display: grid;
   grid-template-columns: repeat(57, 8px);
   grid-template-rows: repeat(63, 8px);
-  /* box-shadow: 0 0 50px #fff, 10px 0 80px blue; */
 }
 
 /* Start Screen CSS */
@@ -113,12 +120,12 @@ img {
 }
 
 /* END SCREEN STYLING */
-#final-score {
+.score {
   grid-row: 1;
   grid-column: 7;
 }
 
-#highest-score {
+.highest-score {
   grid-row: 1;
   grid-column: 30 / 50;
 }

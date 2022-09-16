@@ -5,7 +5,7 @@ import { Ghost } from "./Ghost.js";
 const ghostNames = ["blinky", "pinky", "inky", "clyde"];
 
 export class Game {
-  constructor(board, livesLeft) {
+  constructor(board, livesLeft, points) {
     this.board = board.map((row) =>
       row.map((tileValue) => new Tile(tileValue))
     );
@@ -17,7 +17,7 @@ export class Game {
       new Ghost("inky"),
     ];
     this.inputs = [];
-    this.points = 0;
+    this.points = points || 0;
     this.pillsLeftOnBoard = 244;
     this.livesLeft = livesLeft;
     this.winner = false;
@@ -268,6 +268,8 @@ export class Game {
       this.points += 10;
     } else if (tileValue === 3) {
       this.points += 50;
+    } else {
+      this.points += tileValue;
     }
   }
 

@@ -1,9 +1,15 @@
 import { board } from "../data/board.js";
 import { Game } from "./models/Game.js";
 
+const gameContainer = document.getElementById("game-container");
 const grid = document.getElementById("game");
 const startScreen = document.getElementById("start-screen");
 const endScreen = document.getElementById("end-screen");
+
+const scoreOnGame = document.querySelector("#game-container > .score");
+const highScoreOnGame = document.querySelector(
+  "#game-container > .highest-score"
+);
 
 const startAudio = new Audio("../assets/audio/pacman_beginning.wav");
 const ghostEatAudio = new Audio("../assets/audio/pacman_killghost.m4r");
@@ -81,7 +87,6 @@ startAudio.addEventListener("playing", () => {
 });
 
 startAudio.addEventListener("ended", () => {
-  console.log("MY BIG FAT TITTIES");
   possibleMovements = ["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"];
   game.player.direction = "left";
 });
@@ -219,6 +224,7 @@ function renderStartScreen(startScreen) {
         </div>
         <div class="modal-body">
           ${highScoreList.reduce((prev, highScore) => {
+            console.log(highScore);
             prev += `<p>${highScore[0]}   ${highScore[1]}</p>`;
             return prev;
           }, "")}
@@ -234,6 +240,7 @@ function renderStartScreen(startScreen) {
 }
 
 function renderMap() {
+  gameContainer.style.display = "grid";
   game.board.forEach((row) => {
     row.forEach((tile) => {
       const tileEl = document.createElement("div");
@@ -294,6 +301,11 @@ function renderPos() {
 
 function startPlayInterval() {
   playInterval = setInterval(() => {
+    scoreOnGame.textContent = `1UP ${game.points}`;
+    highScoreOnGame.textContent =
+      game.points > highScoreList[0][1]
+        ? `HIGH SCORE ${game.points}`
+        : `HIGH SCORE ${highScoreList[0][1]}`;
     if (game.livesLeft < 0) {
       clearInterval(playInterval);
       return;
@@ -305,7 +317,7 @@ function startPlayInterval() {
 
     if (game.winner) {
       grid.innerHTML = "";
-      game = new Game(board, game.livesLeft);
+      game = new Game(board, game.livesLeft, game.points);
       renderMap();
       startAudio.play();
 
@@ -354,6 +366,9 @@ window.addEventListener("keydown", ({ key }) => {
 
   // Start Screen Controls
   if (startScreen.style.display === "grid") {
+    controlsModal.hide();
+    highScoreModal.hide();
+
     if (key === "ArrowRight" && startScreenGridRowPos === 0) {
       startScreen.innerHTML = "";
       startScreen.style.display = "none";
@@ -417,14 +432,24 @@ window.addEventListener("keydown", ({ key }) => {
       currPos += 1;
       if (currPos > 2) {
         currPos = 0;
-        renderStartScreen(startScreen);
         highScoreList.push([
           highScoreInp[0].textContent +
             highScoreInp[1].textContent +
             highScoreInp[2].textContent,
           game.points,
         ]);
+        highScoreList.sort((a, b) => {
+          if (a[1] > b[1]) {
+            return -1;
+          } else {
+            return 1;
+          }
+        });
+        renderStartScreen(startScreen);
         startScreenPos = document.getElementById("pacman-controller");
+        highScoreModal = new bootstrap.Modal(
+          document.getElementById("high-score-modal")
+        );
       }
     }
     return;
@@ -539,8 +564,8 @@ let count = 0;
 
 function renderEndScreen(endScreen, points, highestScore) {
   endScreen.style.display = "grid";
-  endScreen.innerHTML = `<span id="final-score">1UP ${points}</span>
-  <span id="highest-score">HIGH SCORE ${highestScore}</span>
+  endScreen.innerHTML = `<span class="score">1UP ${points}</span>
+  <span class="highest-score">HIGH SCORE ${highestScore}</span>
   <span id="header-end"> CHARACTER / NICKNAME</span>
 
   <div id="blinky-end">
@@ -643,17 +668,10 @@ function onDeath() {
 
   setTimeout(() => {
     if (game.livesLeft < 0) {
-      grid.style.display = "none";
+      gameContainer.style.display = "none";
       grid.innerHTML = "";
       clearInterval(playInterval);
 
-      highScoreList.sort((a, b) => {
-        if (a[1] > b[1]) {
-          return -1;
-        } else {
-          return 1;
-        }
-      });
       console.log(highScoreList);
 
       renderEndScreen(endScreen, game.points, highScoreList[0][1]);
