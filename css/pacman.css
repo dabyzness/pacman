@@ -140,8 +140,9 @@ body {
 .dir-down {
   transform: rotate(90deg);
 }
-/* 
+
 .half-middle-center {
+  background-image: var(--pacman-bg);
   clip-path: polygon(
     0% 0%,
     100% 0%,
@@ -154,6 +155,7 @@ body {
 }
 
 .half-middle-right {
+  background-image: var(--pacman-bg);
   clip-path: polygon(
     0% 15%,
     0% 0%,
@@ -167,6 +169,7 @@ body {
 }
 
 .half-top-right {
+  background-image: var(--pacman-bg);
   clip-path: polygon(
     30% 100%,
     0% 100%,
@@ -179,32 +182,9 @@ body {
 }
 
 .half-bottom-right {
+  background-image: var(--pacman-bg);
   clip-path: polygon(30% 0%, 0% 0%, 0% 75%, 50% 75%, 50% 50%, 75% 50%, 75% 25%);
 }
-
-.open-middle-center {
-  clip-path: polygon(0% 0%, 75% 0%, 33% 50%, 75% 100%, 0% 100%);
-}
-
-.open-top-middle {
-  clip-path: polygon(0% 0%, 0% 100%, 75% 100%, 100% 70%, 100% 0%);
-}
-
-.open-bottom-center {
-  clip-path: polygon(0% 0%, 75% 0%, 100% 30%, 100% 100%, 0% 100%);
-}
-
-.open-bottom-right {
-  clip-path: polygon(0% 30%, 0% 75%, 40% 75%);
-}
-
-.open-top-right {
-  clip-path: polygon(0% 70%, 0% 25%, 40% 25%);
-}
-
-.open-middle-right {
-  clip-path: polygon(0% 0%);
-} */
 
 @keyframes waka-t {
   25% {

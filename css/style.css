@@ -31,12 +31,6 @@ body {
   grid-template-rows: repeat(63, 8px);
 }
 
-/* Start Screen CSS */
-#start-screen {
-  /* TEMPORARY */
-  /* display: none; */
-}
-
 img {
   width: 100%;
   grid-row: 10 / 20;
@@ -214,14 +208,14 @@ img {
   font-size: 5rem;
   grid-row: 32;
   grid-column: 24;
-  animation: 1s flashing-letter infinite;
+  /* animation: 1s flashing-letter infinite; */
 }
 
 #third {
   font-size: 5rem;
   grid-row: 32;
   grid-column: 36;
-  animation: 1s flashing-letter infinite;
+  /* animation: 1s flashing-letter infinite; */
 }
 
 #enter-score {
@@ -244,6 +238,13 @@ img {
   50% {
     color: gold;
   }
+}
+
+.remaining-lives {
+  grid-row: 70 / 73;
+  grid-column: 10 / 57;
+
+  display: flex;
 }
 
 .small-pill {

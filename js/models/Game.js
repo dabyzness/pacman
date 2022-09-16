@@ -10,12 +10,7 @@ export class Game {
       row.map((tileValue) => new Tile(tileValue))
     );
     this.player = new Pacman();
-    this.ghosts = [
-      new Ghost("blinky"),
-      new Ghost("pinky"),
-      new Ghost("clyde"),
-      new Ghost("inky"),
-    ];
+    this.ghosts = ghostNames.map((ghostName) => new Ghost(ghostName));
     this.inputs = [];
     this.points = points || 0;
     this.pillsLeftOnBoard = 244;
@@ -234,7 +229,6 @@ export class Game {
             break;
         }
         this.increasePoints(pointValue);
-        console.log(pointValue);
 
         return false;
       }

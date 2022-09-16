@@ -5,6 +5,7 @@ const gameContainer = document.getElementById("game-container");
 const grid = document.getElementById("game");
 const startScreen = document.getElementById("start-screen");
 const endScreen = document.getElementById("end-screen");
+const remainingLives = document.querySelector(".remaining-lives");
 
 const scoreOnGame = document.querySelector("#game-container > .score");
 const highScoreOnGame = document.querySelector(
@@ -14,6 +15,10 @@ const highScoreOnGame = document.querySelector(
 const startAudio = new Audio("../assets/audio/pacman_beginning.wav");
 const ghostEatAudio = new Audio("../assets/audio/pacman_killghost.m4r");
 const deathAudio = new Audio("../assets/audio/pacman_death.wav");
+
+startAudio.volume = 0.1;
+ghostEatAudio.volume = 0.1;
+deathAudio.volume = 0.1;
 
 ghostEatAudio.addEventListener("timeupdate", ({ target }) => {
   var buffer = 0.4;
@@ -107,7 +112,7 @@ function init() {
 }
 
 function renderStartScreen(startScreen) {
-  grid.style.display = "none";
+  gameContainer.style.display = "none";
   endScreen.style.display = "none";
   startScreen.style.display = "grid";
 
@@ -224,7 +229,6 @@ function renderStartScreen(startScreen) {
         </div>
         <div class="modal-body">
           ${highScoreList.reduce((prev, highScore) => {
-            console.log(highScore);
             prev += `<p>${highScore[0]}   ${highScore[1]}</p>`;
             return prev;
           }, "")}
@@ -252,6 +256,7 @@ function renderMap() {
 
   tiles = document.querySelectorAll(".tile");
   renderPos();
+  renderRemainingLives(game.livesLeft);
 }
 
 function renderPos() {
@@ -372,10 +377,7 @@ window.addEventListener("keydown", ({ key }) => {
     if (key === "ArrowRight" && startScreenGridRowPos === 0) {
       startScreen.innerHTML = "";
       startScreen.style.display = "none";
-      grid.style.display = "grid";
-      // Request Animation Frame --> Scroll Over YADDA YADDA
-      // SetTimeout for length of animation frame;
-      // At Timeout START GAME
+      gameContainer.style.display = "grid";
       game = new Game(board, 2);
       renderMap();
       startAudio.play();
@@ -423,13 +425,19 @@ window.addEventListener("keydown", ({ key }) => {
       }
     } else if (key === "ArrowDown") {
       let char = highScoreInp[currPos].textContent.charCodeAt(0);
-      if (char === 91) {
+      if (char === 90) {
         highScoreInp[currPos].textContent = "A";
       } else {
         highScoreInp[currPos].textContent = String.fromCharCode(char + 1);
       }
     } else if (key === "ArrowRight") {
+      highScoreInp[currPos].style.animation = "none";
+      highScoreInp[currPos].style.animation = "gold";
       currPos += 1;
+      if (currPos <= 2) {
+        highScoreInp[currPos].style.animation = "1s flashing-letter infinite";
+      }
+
       if (currPos > 2) {
         currPos = 0;
         highScoreList.push([
@@ -519,49 +527,6 @@ function renderGhost(ghosts) {
 
 let count = 0;
 
-// SET INTERVAL VERY NECESSARY FOR GAMEPLAY;
-
-// const play = setInterval(() => {
-//   console.log("SHAPOOPY");
-
-//   if (game.winner) {
-//     return;
-//   }
-
-//   if (
-//     game.isGhostTouching(tiles[game.player.currPos[1][1]]) &&
-//     !game.pillTimer
-//   ) {
-//     onDeath();
-//     return;
-//   }
-
-//   if (!game.player.direction) {
-//     renderPos();
-//     renderGhost(game.ghosts);
-//     return;
-//   }
-
-//   if (game.pillTimer) {
-//     game.setPillTimer(-1);
-//   }
-
-//   if (count === 3) {
-//     unRenderPos(game.player);
-//     game.movePlayer();
-//     game.ghosts.forEach((ghost) => {
-//       unRenderPos(ghost);
-//       game.moveGhost(ghost);
-//     });
-//     count = 0;
-//   } else {
-//     count += 1;
-//   }
-
-//   renderPos();
-//   renderGhost(game.ghosts);
-// }, 1000 / 60);
-
 function renderEndScreen(endScreen, points, highestScore) {
   endScreen.style.display = "grid";
   endScreen.innerHTML = `<span class="score">1UP ${points}</span>
@@ -634,9 +599,35 @@ function renderEndScreen(endScreen, points, highestScore) {
   <span id="remaining-credits">CREDITS 0</span>`;
 }
 
+function renderRemainingLives(lives) {
+  remainingLives.innerHTML = "";
+
+  for (let i = 1; i <= lives; i += 1) {
+    const life = document.createElement("div");
+
+    life.style.display = "grid";
+    life.style.gridRow = " 1 / 3";
+    life.style.gridTemplateColumns = "repeat(3, 8px)";
+    life.style.marginLeft = "8px";
+    life.innerHTML = `<div class="half-bottom-right dir-left"></div>
+    <div class="bottom-center dir-left"></div>
+    <div class="bottom-left dir-left"></div>
+    <div class="half-middle-right dir-left"></div>
+    <div class="half-middle-center dir-left"></div>
+    <div class="middle-left dir-left"></div>
+    <div class="half-top-right dir-left"></div>
+    <div class="top-center dir-left"></div>
+    <div class="top-left dir-left"></div>
+    `;
+
+    remainingLives.appendChild(life);
+  }
+}
+
 function onDeath() {
   game.player.isDead = true;
   game.changeLivesLeft(-1);
+  renderRemainingLives(game.livesLeft);
 
   game.ghostsEaten = [];
   game.ghosts.forEach((ghost) => {
@@ -671,8 +662,6 @@ function onDeath() {
       gameContainer.style.display = "none";
       grid.innerHTML = "";
       clearInterval(playInterval);
-
-      console.log(highScoreList);
 
       renderEndScreen(endScreen, game.points, highScoreList[0][1]);
       left = document.getElementById("first");
