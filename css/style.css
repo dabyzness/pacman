@@ -208,14 +208,12 @@ img {
   font-size: 5rem;
   grid-row: 32;
   grid-column: 24;
-  /* animation: 1s flashing-letter infinite; */
 }
 
 #third {
   font-size: 5rem;
   grid-row: 32;
   grid-column: 36;
-  /* animation: 1s flashing-letter infinite; */
 }
 
 #enter-score {
