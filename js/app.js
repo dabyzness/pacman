@@ -21,7 +21,7 @@ ghostEatAudio.volume = 0.1;
 deathAudio.volume = 0.1;
 
 ghostEatAudio.addEventListener("timeupdate", ({ target }) => {
-  var buffer = 0.4;
+  let buffer = 0.4;
   if (target.currentTime > target.duration - buffer) {
     target.currentTime = 0.1;
     target.play();
@@ -663,7 +663,10 @@ function onDeath() {
       grid.innerHTML = "";
       clearInterval(playInterval);
 
-      renderEndScreen(endScreen, game.points, highScoreList[0][1]);
+      let topScore =
+        game.points > highScoreList[0][1] ? game.points : highScoreList[0][1];
+
+      renderEndScreen(endScreen, game.points, topScore);
       left = document.getElementById("first");
       middle = document.getElementById("second");
       right = document.getElementById("third");
