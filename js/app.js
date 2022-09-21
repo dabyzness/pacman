@@ -4,16 +4,18 @@ import {
   renderStartScreen,
   deRenderStartScreen,
   startScreenGridRowCont,
-} from "./startScreen.js";
-import { renderEndScreen, deRenderEndScreen } from "./endScreen.js";
+} from "./renders/startScreen.js";
+import { renderEndScreen, deRenderEndScreen } from "./renders/endScreen.js";
 import {
-  pacmanLayoutDown,
-  pacmanLayoutLeft,
-  pacmanLayoutRight,
-  pacmanLayoutUp,
-  ghostLayout,
-  edgeCornerNames,
-} from "./layouts.js";
+  renderMap,
+  renderRemainingLives,
+  renderPos,
+  unRenderPos,
+  renderGhost,
+  renderTilesFlashing,
+  stopTilesFlashing,
+} from "./renders/gameScreen.js";
+import { startAudio, ghostEatAudio, deathAudio } from "./renders/audio.js";
 
 /* ------------------- Cached Elements References-------------------*/
 const gameContainer = document.getElementById("game-container");
@@ -35,7 +37,9 @@ let left, middle, right;
 let highScoreInp;
 
 /* ------------------- Variables -------------------*/
+let game;
 let playInterval;
+let count = 0;
 let currPos = 0;
 let startScreenGridRowPos = 0;
 let possibleMovements = ["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"];
@@ -49,10 +53,6 @@ const highScoreList = [
 ];
 
 /* ------------------- Audio Elements -------------------*/
-const startAudio = new Audio("../assets/audio/pacman_beginning.wav");
-const ghostEatAudio = new Audio("../assets/audio/pacman_killghost.m4r");
-const deathAudio = new Audio("../assets/audio/pacman_death.wav");
-
 startAudio.volume = 0.1;
 ghostEatAudio.volume = 0.1;
 deathAudio.volume = 0.1;
@@ -109,9 +109,10 @@ function handleKeyDownOnStartScreen(key) {
 
   if (key === "ArrowRight" && startScreenGridRowPos === 0) {
     deRenderStartScreen(startScreen);
-    gameContainer.style.display = "grid";
     game = new Game(board, 2);
-    renderMap();
+    renderMap(gameContainer, grid, game.board);
+    tiles = document.querySelectorAll(".tile");
+    renderRemainingLives(remainingLives, game.livesLeft);
     startAudio.play();
     startPlayInterval();
     return;
@@ -146,61 +147,69 @@ function handleKeyDownOnStartScreen(key) {
 }
 
 function handleKeyDownOnEndScreen(key) {
-  if (key === "ArrowUp") {
-    let char = highScoreInp[currPos].textContent.charCodeAt(0);
-    if (char === 65) {
-      highScoreInp[currPos].textContent = "Z";
-    } else {
-      highScoreInp[currPos].textContent = String.fromCharCode(char - 1);
-    }
-  } else if (key === "ArrowDown") {
-    let char = highScoreInp[currPos].textContent.charCodeAt(0);
-    if (char === 90) {
-      highScoreInp[currPos].textContent = "A";
-    } else {
-      highScoreInp[currPos].textContent = String.fromCharCode(char + 1);
-    }
-  } else if (key === "ArrowRight") {
-    highScoreInp[currPos].style.animation = "none";
-    highScoreInp[currPos].style.animation = "gold";
-    currPos += 1;
-    if (currPos <= 2) {
-      highScoreInp[currPos].style.animation = "1s flashing-letter infinite";
-    }
+  let char;
+  switch (key) {
+    case "ArrowUp":
+      char = highScoreInp[currPos].textContent.charCodeAt(0);
+      if (char === 65) {
+        highScoreInp[currPos].textContent = "Z";
+      } else {
+        highScoreInp[currPos].textContent = String.fromCharCode(char - 1);
+      }
+      break;
+    case "ArrowDown":
+      char = highScoreInp[currPos].textContent.charCodeAt(0);
+      if (char === 90) {
+        highScoreInp[currPos].textContent = "A";
+      } else {
+        highScoreInp[currPos].textContent = String.fromCharCode(char + 1);
+      }
+      break;
+    case "ArrowRight":
+      highScoreInp[currPos].style.animation = "none";
+      highScoreInp[currPos].style.animation = "gold";
+      currPos += 1;
+      if (currPos <= 2) {
+        highScoreInp[currPos].style.animation = "1s flashing-letter infinite";
+      }
 
-    if (currPos > 2) {
-      currPos = 0;
-      highScoreList.push([
-        highScoreInp[0].textContent +
-          highScoreInp[1].textContent +
-          highScoreInp[2].textContent,
-        game.points,
-      ]);
-      highScoreList.sort((a, b) => {
-        if (a[1] > b[1]) {
-          return -1;
-        } else {
-          return 1;
-        }
-      });
-      renderStartScreen(startScreen, highScoreList);
-      startScreenPos = document.getElementById("pacman-controller");
-      highScoreModal = new bootstrap.Modal(
-        document.getElementById("high-score-modal")
-      );
-      deRenderEndScreen(endScreen);
-    }
+      if (currPos > 2) {
+        currPos = 0;
+        highScoreList.push([
+          highScoreInp[0].textContent +
+            highScoreInp[1].textContent +
+            highScoreInp[2].textContent,
+          game.points,
+        ]);
+        highScoreList.sort((a, b) => {
+          if (a[1] > b[1]) {
+            return -1;
+          } else {
+            return 1;
+          }
+        });
+        renderStartScreen(startScreen, highScoreList);
+        startScreenPos = document.getElementById("pacman-controller");
+        highScoreModal = new bootstrap.Modal(
+          document.getElementById("high-score-modal")
+        );
+        deRenderEndScreen(endScreen);
+      }
+      break;
+    default:
+      break;
   }
 }
 
-let game;
-
-init();
-
+/**
+ * Initializes Game. Renders start screen and caches start screen
+ * element references
+ */
 function init() {
   gameContainer.style.display = "none";
   deRenderEndScreen(endScreen);
   renderStartScreen(startScreen, highScoreList);
+
   startScreenPos = document.getElementById("pacman-controller");
   controlsModal = new bootstrap.Modal(
     document.getElementById("controls-modal")
@@ -208,67 +217,6 @@ function init() {
   highScoreModal = new bootstrap.Modal(
     document.getElementById("high-score-modal")
   );
-}
-
-function renderMap() {
-  gameContainer.style.display = "grid";
-  game.board.forEach((row) => {
-    row.forEach((tile) => {
-      const tileEl = document.createElement("div");
-
-      tileEl.setAttribute("class", tile.className);
-      grid.appendChild(tileEl);
-    });
-  });
-
-  tiles = document.querySelectorAll(".tile");
-  renderPos();
-  renderRemainingLives(game.livesLeft);
-}
-
-function renderPos() {
-  switch (game.player.direction) {
-    case "up":
-      game.player.currPos.forEach((pos, i) => {
-        tiles[pos[1]].setAttribute("class", `tile ${pacmanLayoutUp[i][1]}`);
-        tiles[pos[0]].setAttribute("class", `tile ${pacmanLayoutUp[i][0]}`);
-        tiles[pos[2]].setAttribute("class", `tile ${pacmanLayoutUp[i][2]}`);
-      });
-      break;
-    case "down":
-      game.player.currPos.forEach((pos, i) => {
-        tiles[pos[1]].setAttribute("class", `tile ${pacmanLayoutDown[i][1]}`);
-        tiles[pos[0]].setAttribute("class", `tile ${pacmanLayoutDown[i][0]}`);
-        tiles[pos[2]].setAttribute("class", `tile ${pacmanLayoutDown[i][2]}`);
-      });
-      break;
-    case "left":
-      game.player.currPos.forEach((pos, i) => {
-        tiles[pos[1]].setAttribute("class", `tile ${pacmanLayoutLeft[i][1]}`);
-        tiles[pos[0]].setAttribute("class", `tile ${pacmanLayoutLeft[i][0]}`);
-        tiles[pos[2]].setAttribute("class", `tile ${pacmanLayoutLeft[i][2]}`);
-      });
-      break;
-    case "right":
-      game.player.currPos.forEach((pos, i) => {
-        tiles[pos[1]].setAttribute("class", `tile ${pacmanLayoutRight[i][1]}`);
-        tiles[pos[0]].setAttribute("class", `tile ${pacmanLayoutRight[i][0]}`);
-        tiles[pos[2]].setAttribute("class", `tile ${pacmanLayoutRight[i][2]}`);
-      });
-      break;
-    default:
-      game.player.currPos.forEach((pos, i) => {
-        tiles[pos[1]].setAttribute("class", `tile ${pacmanLayoutLeft[i][1]}`);
-        tiles[pos[0]].setAttribute("class", `tile ${pacmanLayoutLeft[i][0]}`);
-        tiles[pos[2]].setAttribute("class", `tile ${pacmanLayoutLeft[i][2]}`);
-
-        tiles[pos[1]].style.animationName = "none";
-        tiles[pos[0]].style.animationName = "none";
-        tiles[pos[2]].style.animationName = "none";
-      });
-
-      break;
-  }
 }
 
 function startPlayInterval() {
@@ -290,7 +238,9 @@ function startPlayInterval() {
     if (game.winner) {
       grid.innerHTML = "";
       game = new Game(board, game.livesLeft, game.points);
-      renderMap();
+      renderMap(gameContainer, grid, game.board);
+      renderRemainingLives(remainingLives, game.livesLeft);
+      tiles = document.querySelectorAll(".tile");
       startAudio.play();
 
       return;
@@ -305,8 +255,8 @@ function startPlayInterval() {
     }
 
     if (!game.player.direction) {
-      renderPos();
-      renderGhost(game.ghosts);
+      renderPos(game.player.direction, game.player.currPos, tiles);
+      renderGhost(game.ghosts, game.pillTimer, tiles);
       return;
     }
 
@@ -315,10 +265,10 @@ function startPlayInterval() {
     }
 
     if (count === 3) {
-      unRenderPos(game.player);
+      unRenderPos(game.player, tiles, game.board);
       game.movePlayer();
       game.ghosts.forEach((ghost) => {
-        unRenderPos(ghost);
+        unRenderPos(ghost, tiles, game.board);
         game.moveGhost(ghost);
       });
       count = 0;
@@ -326,105 +276,23 @@ function startPlayInterval() {
       count += 1;
     }
 
-    renderPos();
-    renderGhost(game.ghosts);
+    renderPos(game.player.direction, game.player.currPos, tiles);
+    renderGhost(game.ghosts, game.pillTimer, tiles);
   }, 1000 / 60);
-}
-
-function unRenderPos(character) {
-  character.currPos.forEach((row, i) => {
-    row.forEach((tileNo, i) => {
-      tiles[tileNo].setAttribute(
-        "class",
-        game.board[Math.floor(tileNo / game.board[0].length)][
-          tileNo % game.board[0].length
-        ].className
-      );
-    });
-  });
-}
-
-function renderGhost(ghosts) {
-  let canBeEaten;
-
-  if (game.pillTimer) {
-    ghostEatAudio.play();
-    if (game.pillTimer < 10) {
-      canBeEaten = "killable-blue";
-    } else if (game.pillTimer < 20) {
-      canBeEaten = "killable-white";
-    } else if (game.pillTimer < 30) {
-      canBeEaten = "killable-blue";
-    } else if (game.pillTimer < 40) {
-      canBeEaten = "killable-white";
-    } else if (game.pillTimer < 50) {
-      canBeEaten = "killable-blue";
-    } else if (game.pillTimer <= 60) {
-      canBeEaten = "killable-white";
-    } else {
-      canBeEaten = "killable-blue";
-    }
-  } else {
-    ghostEatAudio.pause();
-  }
-
-  ghosts.forEach((ghost) => {
-    ghost.currPos.forEach((pos, i) => {
-      tiles[pos[1]].setAttribute(
-        "class",
-        `tile ${ghost.name} ${ghostLayout[i][1]} ${canBeEaten}`
-      );
-      tiles[pos[0]].setAttribute(
-        "class",
-        `tile ${ghost.name} ${ghostLayout[i][0]} ${canBeEaten}`
-      );
-      tiles[pos[2]].setAttribute(
-        "class",
-        `tile ${ghost.name} ${ghostLayout[i][2]} ${canBeEaten}`
-      );
-    });
-  });
-}
-
-let count = 0;
-
-function renderRemainingLives(lives) {
-  remainingLives.innerHTML = "";
-
-  for (let i = 1; i <= lives; i += 1) {
-    const life = document.createElement("div");
-
-    life.style.display = "grid";
-    life.style.gridRow = " 1 / 3";
-    life.style.gridTemplateColumns = "repeat(3, 8px)";
-    life.style.marginLeft = "8px";
-    life.innerHTML = `<div class="half-bottom-right dir-left"></div>
-    <div class="bottom-center dir-left"></div>
-    <div class="bottom-left dir-left"></div>
-    <div class="half-middle-right dir-left"></div>
-    <div class="half-middle-center dir-left"></div>
-    <div class="middle-left dir-left"></div>
-    <div class="half-top-right dir-left"></div>
-    <div class="top-center dir-left"></div>
-    <div class="top-left dir-left"></div>
-    `;
-
-    remainingLives.appendChild(life);
-  }
 }
 
 function onDeath() {
   game.player.isDead = true;
   game.changeLivesLeft(-1);
-  renderRemainingLives(game.livesLeft);
+  renderRemainingLives(remainingLives, game.livesLeft);
 
   game.ghostsEaten = [];
   game.ghosts.forEach((ghost) => {
-    unRenderPos(ghost);
+    unRenderPos(ghost, tiles, game.board);
     game.ghostsEaten.push(ghost.name);
   });
 
-  renderPos(game.player);
+  renderPos(game.player.direction, game.player.currPos, tiles);
   game.ghosts = [];
   game.ghostsEaten.forEach((ghostEaten) => {
     game.respawnGhost(ghostEaten);
@@ -432,18 +300,10 @@ function onDeath() {
   game.ghostsEaten = [];
   deathAudio.play();
 
-  tiles.forEach((tile) => {
-    if (edgeCornerNames.includes(tile.classList.value)) {
-      tile.style.animation = ".5s on-death-corners infinite";
-    } else if (tile.classList.value === "tile edge-top") {
-      tile.style.animation = ".5s on-death-horiz infinite";
-    } else if (tile.classList.value === "tile edge-middle") {
-      tile.style.animation = ".5s on-death-vert infinite";
-    }
-  });
+  renderTilesFlashing(tiles);
 
   setTimeout(() => {
-    unRenderPos(game.player);
+    unRenderPos(game.player, tiles, game.board);
   }, 2000);
 
   setTimeout(() => {
@@ -465,18 +325,12 @@ function onDeath() {
 
     game.respawnPlayer();
     game.inputs = [];
-    renderGhost(game.ghosts);
-    renderPos(game.player);
-    tiles.forEach((tile) => {
-      if (edgeCornerNames.includes(tile.classList.value)) {
-        tile.style.animation = "";
-      } else if (tile.classList.value === "tile edge-top") {
-        tile.style.animation = "";
-      } else if (tile.classList.value === "tile edge-middle") {
-        tile.style.animation = "";
-      }
-    });
+    renderGhost(game.ghosts, game.pillTimer, tiles);
+    renderPos(game.player.direction, game.player.currPos, tiles);
+    stopTilesFlashing(tiles);
     startAudio.play();
     game.player.isDead = false;
   }, 3000);
 }
+
+init();
