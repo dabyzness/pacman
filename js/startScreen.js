@@ -1,3 +1,5 @@
+const startScreenGridRowCont = ["35 / 38", "40 / 43", "47 / 50"];
+
 function renderStartScreen(startScreen, highScoreArr) {
   startScreen.style.display = "grid";
 
@@ -133,4 +135,4 @@ function deRenderStartScreen(startScreen) {
   startScreen.style.display = "none";
 }
 
-export { renderStartScreen, deRenderStartScreen };
+export { renderStartScreen, deRenderStartScreen, startScreenGridRowCont };
