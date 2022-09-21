@@ -1,6 +1,4 @@
 function renderStartScreen(startScreen, highScoreArr) {
-  // gameContainer.style.display = "none";
-  // endScreen.style.display = "none";
   startScreen.style.display = "grid";
 
   startScreen.innerHTML = `<img src="./assets/svg/Pac-Man.svg" alt="" />
@@ -129,3 +127,10 @@ function renderStartScreen(startScreen, highScoreArr) {
 
 `;
 }
+
+function deRenderStartScreen(startScreen) {
+  startScreen.innerHTML = "";
+  startScreen.style.display = "none";
+}
+
+export { renderStartScreen, deRenderStartScreen };
