@@ -235,6 +235,48 @@ function startPlayInterval() {
   }, 1000 / 60);
 }
 
+function handleKeyDownOnStartScreen(key) {
+  controlsModal.hide();
+  highScoreModal.hide();
+
+  if (key === "ArrowRight" && startScreenGridRowPos === 0) {
+    deRenderStartScreen(startScreen);
+    gameContainer.style.display = "grid";
+    game = new Game(board, 2);
+    renderMap();
+    startAudio.play();
+    startPlayInterval();
+    return;
+  }
+
+  if (key === "ArrowRight" && startScreenGridRowPos === 1) {
+    controlsModal.show();
+  }
+
+  if (key === "ArrowRight" && startScreenGridRowPos === 2) {
+    highScoreModal.show();
+  }
+
+  if (key === "ArrowUp") {
+    startScreenGridRowPos -= 1;
+  } else if (key === "ArrowDown") {
+    startScreenGridRowPos += 1;
+  }
+
+  switch (startScreenGridRowPos) {
+    case -1:
+      startScreenGridRowPos = 0;
+      break;
+    case 3:
+      startScreenGridRowPos = 2;
+      break;
+    default:
+      startScreenPos.style.gridRow =
+        startScreenGridRowCont[startScreenGridRowPos];
+      break;
+  }
+}
+
 window.addEventListener("keydown", ({ key }) => {
   if (!possibleMovements.includes(key)) {
     return;
@@ -242,45 +284,7 @@ window.addEventListener("keydown", ({ key }) => {
 
   // Start Screen Controls
   if (startScreen.style.display === "grid") {
-    controlsModal.hide();
-    highScoreModal.hide();
-
-    if (key === "ArrowRight" && startScreenGridRowPos === 0) {
-      deRenderStartScreen(startScreen);
-      gameContainer.style.display = "grid";
-      game = new Game(board, 2);
-      renderMap();
-      startAudio.play();
-      startPlayInterval();
-      return;
-    }
-
-    if (key === "ArrowRight" && startScreenGridRowPos === 1) {
-      controlsModal.show();
-    }
-
-    if (key === "ArrowRight" && startScreenGridRowPos === 2) {
-      highScoreModal.show();
-    }
-
-    if (key === "ArrowUp") {
-      startScreenGridRowPos -= 1;
-    } else if (key === "ArrowDown") {
-      startScreenGridRowPos += 1;
-    }
-
-    switch (startScreenGridRowPos) {
-      case -1:
-        startScreenGridRowPos = 0;
-        break;
-      case 3:
-        startScreenGridRowPos = 2;
-        break;
-      default:
-        startScreenPos.style.gridRow =
-          startScreenGridRowCont[startScreenGridRowPos];
-        break;
-    }
+    handleKeyDownOnStartScreen(key);
 
     return;
   }
