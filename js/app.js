@@ -88,6 +88,7 @@ const edgeCornerNames = [
   "tile edge-bottom-right",
 ];
 
+// Event Listeners
 startAudio.addEventListener("playing", () => {
   possibleMovements = [];
 });
@@ -96,6 +97,8 @@ startAudio.addEventListener("ended", () => {
   possibleMovements = ["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"];
   game.player.direction = "left";
 });
+
+window.addEventListener("keydown", handleKeyDown);
 
 let game;
 
@@ -235,6 +238,32 @@ function startPlayInterval() {
   }, 1000 / 60);
 }
 
+// on Key Down functions
+function handleKeyDown({ key }) {
+  if (!possibleMovements.includes(key)) {
+    return;
+  }
+
+  // Start Screen Controls
+  if (startScreen.style.display === "grid") {
+    handleKeyDownOnStartScreen(key);
+
+    return;
+  }
+
+  if (endScreen.style.display === "grid") {
+    handleKeyDownOnEndScreen(key);
+
+    return;
+  }
+
+  game.setInputs(key.replace("Arrow", "").toLowerCase());
+
+  if (!game.player.direction) {
+    game.player.direction = key.replace("Arrow", "").toLowerCase();
+  }
+}
+
 function handleKeyDownOnStartScreen(key) {
   controlsModal.hide();
   highScoreModal.hide();
@@ -277,72 +306,52 @@ function handleKeyDownOnStartScreen(key) {
   }
 }
 
-window.addEventListener("keydown", ({ key }) => {
-  if (!possibleMovements.includes(key)) {
-    return;
-  }
-
-  // Start Screen Controls
-  if (startScreen.style.display === "grid") {
-    handleKeyDownOnStartScreen(key);
-
-    return;
-  }
-
-  if (endScreen.style.display === "grid") {
-    if (key === "ArrowUp") {
-      let char = highScoreInp[currPos].textContent.charCodeAt(0);
-      if (char === 65) {
-        highScoreInp[currPos].textContent = "Z";
-      } else {
-        highScoreInp[currPos].textContent = String.fromCharCode(char - 1);
-      }
-    } else if (key === "ArrowDown") {
-      let char = highScoreInp[currPos].textContent.charCodeAt(0);
-      if (char === 90) {
-        highScoreInp[currPos].textContent = "A";
-      } else {
-        highScoreInp[currPos].textContent = String.fromCharCode(char + 1);
-      }
-    } else if (key === "ArrowRight") {
-      highScoreInp[currPos].style.animation = "none";
-      highScoreInp[currPos].style.animation = "gold";
-      currPos += 1;
-      if (currPos <= 2) {
-        highScoreInp[currPos].style.animation = "1s flashing-letter infinite";
-      }
-
-      if (currPos > 2) {
-        currPos = 0;
-        highScoreList.push([
-          highScoreInp[0].textContent +
-            highScoreInp[1].textContent +
-            highScoreInp[2].textContent,
-          game.points,
-        ]);
-        highScoreList.sort((a, b) => {
-          if (a[1] > b[1]) {
-            return -1;
-          } else {
-            return 1;
-          }
-        });
-        renderStartScreen(startScreen, highScoreList);
-        startScreenPos = document.getElementById("pacman-controller");
-        highScoreModal = new bootstrap.Modal(
-          document.getElementById("high-score-modal")
-        );
-      }
+function handleKeyDownOnEndScreen(key) {
+  if (key === "ArrowUp") {
+    let char = highScoreInp[currPos].textContent.charCodeAt(0);
+    if (char === 65) {
+      highScoreInp[currPos].textContent = "Z";
+    } else {
+      highScoreInp[currPos].textContent = String.fromCharCode(char - 1);
     }
-    return;
-  }
+  } else if (key === "ArrowDown") {
+    let char = highScoreInp[currPos].textContent.charCodeAt(0);
+    if (char === 90) {
+      highScoreInp[currPos].textContent = "A";
+    } else {
+      highScoreInp[currPos].textContent = String.fromCharCode(char + 1);
+    }
+  } else if (key === "ArrowRight") {
+    highScoreInp[currPos].style.animation = "none";
+    highScoreInp[currPos].style.animation = "gold";
+    currPos += 1;
+    if (currPos <= 2) {
+      highScoreInp[currPos].style.animation = "1s flashing-letter infinite";
+    }
 
-  game.setInputs(key.replace("Arrow", "").toLowerCase());
-
-  if (!game.player.direction) {
-    game.player.direction = key.replace("Arrow", "").toLowerCase();
+    if (currPos > 2) {
+      currPos = 0;
+      highScoreList.push([
+        highScoreInp[0].textContent +
+          highScoreInp[1].textContent +
+          highScoreInp[2].textContent,
+        game.points,
+      ]);
+      highScoreList.sort((a, b) => {
+        if (a[1] > b[1]) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+      renderStartScreen(startScreen, highScoreList);
+      startScreenPos = document.getElementById("pacman-controller");
+      highScoreModal = new bootstrap.Modal(
+        document.getElementById("high-score-modal")
+      );
+    }
   }
-});
+}
 
 function unRenderPos(character) {
   character.currPos.forEach((row, i) => {
