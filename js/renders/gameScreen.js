@@ -47,43 +47,19 @@ function renderRemainingLives(remainingLivesEl, lives) {
 }
 
 function renderPos(direction, currPos, tilesEl) {
+  tilesEl[currPos[1][1]].classList.add("puckman");
   switch (direction) {
     case "up":
-      currPos.forEach((pos, i) => {
-        tilesEl[pos[1]].setAttribute("class", `tile ${pacmanLayoutUp[i][1]}`);
-        tilesEl[pos[0]].setAttribute("class", `tile ${pacmanLayoutUp[i][0]}`);
-        tilesEl[pos[2]].setAttribute("class", `tile ${pacmanLayoutUp[i][2]}`);
-      });
+      tilesEl[currPos[1][1]].style.transform = "rotate(270deg) scale(300%)";
       break;
     case "down":
-      currPos.forEach((pos, i) => {
-        tilesEl[pos[1]].setAttribute("class", `tile ${pacmanLayoutDown[i][1]}`);
-        tilesEl[pos[0]].setAttribute("class", `tile ${pacmanLayoutDown[i][0]}`);
-        tilesEl[pos[2]].setAttribute("class", `tile ${pacmanLayoutDown[i][2]}`);
-      });
+      tilesEl[currPos[1][1]].style.transform = "rotate(90deg) scale(300%)";
       break;
     case "left":
-      currPos.forEach((pos, i) => {
-        tilesEl[pos[1]].setAttribute("class", `tile ${pacmanLayoutLeft[i][1]}`);
-        tilesEl[pos[0]].setAttribute("class", `tile ${pacmanLayoutLeft[i][0]}`);
-        tilesEl[pos[2]].setAttribute("class", `tile ${pacmanLayoutLeft[i][2]}`);
-      });
+      tilesEl[currPos[1][1]].style.transform = "rotate(180deg) scale(300%)";
       break;
     case "right":
-      currPos.forEach((pos, i) => {
-        tilesEl[pos[1]].setAttribute(
-          "class",
-          `tile ${pacmanLayoutRight[i][1]}`
-        );
-        tilesEl[pos[0]].setAttribute(
-          "class",
-          `tile ${pacmanLayoutRight[i][0]}`
-        );
-        tilesEl[pos[2]].setAttribute(
-          "class",
-          `tile ${pacmanLayoutRight[i][2]}`
-        );
-      });
+      tilesEl[currPos[1][1]].style.transform = "rotate(0deg) scale(300%)";
       break;
     default:
       currPos.forEach((pos, i) => {
