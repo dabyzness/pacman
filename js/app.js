@@ -246,13 +246,13 @@ function startPlayInterval() {
       return;
     }
 
-    if (
-      game.isGhostTouching(tiles[game.player.currPos[1][1]]) &&
-      !game.pillTimer
-    ) {
-      onDeath();
-      return;
-    }
+    // if (
+    //   game.isGhostTouching(tiles[game.player.currPos[1][1]]) &&
+    //   !game.pillTimer
+    // ) {
+    //   onDeath();
+    //   return;
+    // }
 
     if (!game.player.direction) {
       renderPos(game.player.direction, game.player.currPos, tiles);
@@ -267,10 +267,10 @@ function startPlayInterval() {
     if (count === 3) {
       unRenderPos(game.player, tiles, game.board);
       game.movePlayer();
-      game.ghosts.forEach((ghost) => {
-        unRenderPos(ghost, tiles, game.board);
-        game.moveGhost(ghost);
-      });
+      // game.ghosts.forEach((ghost) => {
+      //   unRenderPos(ghost, tiles, game.board);
+      //   game.moveGhost(ghost);
+      // });
       count = 0;
     } else {
       count += 1;

@@ -47,45 +47,53 @@ function renderRemainingLives(remainingLivesEl, lives) {
 }
 
 function renderPos(direction, currPos, tilesEl) {
-  tilesEl[currPos[1][1]].classList.add("puckman");
+  console.log(currPos);
+  tilesEl[currPos].classList.add("puckman");
   switch (direction) {
     case "up":
-      tilesEl[currPos[1][1]].style.transform = "rotate(270deg) scale(300%)";
+      tilesEl[currPos].style.transform = "rotate(270deg) scale(300%)";
       break;
     case "down":
-      tilesEl[currPos[1][1]].style.transform = "rotate(90deg) scale(300%)";
+      tilesEl[currPos].style.transform = "rotate(90deg) scale(300%)";
       break;
     case "left":
-      tilesEl[currPos[1][1]].style.transform = "rotate(180deg) scale(300%)";
+      tilesEl[currPos].style.transform = "rotate(180deg) scale(300%)";
       break;
     case "right":
-      tilesEl[currPos[1][1]].style.transform = "rotate(0deg) scale(300%)";
+      tilesEl[currPos].style.transform = "rotate(0deg) scale(300%)";
       break;
     default:
-      currPos.forEach((pos, i) => {
-        tilesEl[pos[1]].setAttribute("class", `tile ${pacmanLayoutLeft[i][1]}`);
-        tilesEl[pos[0]].setAttribute("class", `tile ${pacmanLayoutLeft[i][0]}`);
-        tilesEl[pos[2]].setAttribute("class", `tile ${pacmanLayoutLeft[i][2]}`);
+      // currPos.forEach((pos, i) => {
+      //   tilesEl[pos[1]].setAttribute("class", `tile ${pacmanLayoutLeft[i][1]}`);
+      //   tilesEl[pos[0]].setAttribute("class", `tile ${pacmanLayoutLeft[i][0]}`);
+      //   tilesEl[pos[2]].setAttribute("class", `tile ${pacmanLayoutLeft[i][2]}`);
 
-        tilesEl[pos[1]].style.animationName = "none";
-        tilesEl[pos[0]].style.animationName = "none";
-        tilesEl[pos[2]].style.animationName = "none";
-      });
+      //   tilesEl[pos[1]].style.animationName = "none";
+      //   tilesEl[pos[0]].style.animationName = "none";
+      //   tilesEl[pos[2]].style.animationName = "none";
+      // });
 
       break;
   }
 }
 
 function unRenderPos(character, tilesEl, board) {
-  character.currPos.forEach((row, i) => {
-    row.forEach((tileNo, i) => {
-      tilesEl[tileNo].setAttribute(
-        "class",
-        board[Math.floor(tileNo / board[0].length)][tileNo % board[0].length]
-          .className
-      );
-    });
-  });
+  tilesEl[character.currPos].setAttribute(
+    "class",
+    board[Math.floor(character.currPos / board[0].length)][
+      character.currPos % board[0].length
+    ].className
+  );
+
+  // character.currPos.forEach((row, i) => {
+  //   row.forEach((tileNo, i) => {
+  //     tilesEl[tileNo].setAttribute(
+  //       "class",
+  //       board[Math.floor(tileNo / board[0].length)][tileNo % board[0].length]
+  //         .className
+  //     );
+  //   });
+  // });
 }
 
 function renderGhost(ghosts, pillTimer, tilesEl) {
