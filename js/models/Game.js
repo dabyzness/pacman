@@ -134,9 +134,11 @@ export class Game {
     if (!this.player.direction) {
       return;
     }
-    let nextPos = this.player.getNextPos(this.board[0].length, this.inputs);
+    let dir = this.inputs.shift() || this.player.direction;
 
-    if (this.isWallAhead(nextPos, this.player.direction)) {
+    let nextPos = this.player.getNextPos(this.board[0].length, dir);
+
+    if (this.isWallAhead(nextPos, dir)) {
       // const improvedPos = this.improvePlayerMovementHitBox(
       //   nextPos,
       //   this.player
@@ -147,12 +149,26 @@ export class Game {
       // } else {
       //   return;
       // }
-      return;
+
+      if (dir === this.player.direction) {
+        return;
+      } else {
+        dir = this.player.direction;
+        nextPos = this.player.getNextPos(
+          this.board[0].length,
+          this.player.direction
+        );
+
+        if (this.isWallAhead(nextPos, this.player.direction)) {
+          return;
+        }
+      }
     }
 
     this.handleIfPointAhead(nextPos, this.player);
 
     this.player.currPos = nextPos;
+    this.player.direction = dir;
   }
 
   handleIfPointAhead(nextPos, character) {

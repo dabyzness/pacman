@@ -15,11 +15,8 @@ export class Pacman {
     this.currPos = currPos;
   }
 
-  getNextPos(boardLength, inputsArr) {
+  getNextPos(boardLength, dir) {
     let nextPos;
-    const dir = inputsArr.shift() || this.direction;
-
-    this.direction = dir;
 
     switch (dir) {
       case "up":
