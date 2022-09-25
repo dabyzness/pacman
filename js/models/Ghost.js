@@ -1,26 +1,7 @@
-const blinkyStart = [
-  [1338 - 57, 1339 - 57, 1340 - 57],
-  [1338, 1339, 1340],
-  [1338 + 57, 1339 + 57, 1340 + 57],
-];
-
-const pinkyStart = [
-  [1680 - 57, 1681 - 57, 1682 - 57],
-  [1680, 1681, 1682],
-  [1680 + 57, 1681 + 57, 1682 + 57],
-];
-
-const inkyStart = [
-  [1676 - 57, 1677 - 57, 1678 - 57],
-  [1676, 1677, 1678],
-  [1676 + 57, 1677 + 57, 1678 + 57],
-];
-
-const clydeStart = [
-  [1684 - 57, 1685 - 57, 1686 - 57],
-  [1684, 1685, 1686],
-  [1684 + 57, 1685 + 57, 1686 + 57],
-];
+const blinkyStart = 1339;
+const pinkyStart = 1681;
+const inkyStart = 1677;
+const clydeStart = 1685;
 
 export class Ghost {
   constructor(name) {
@@ -56,24 +37,20 @@ export class Ghost {
   }
 
   getNextPos(boardLength, dir) {
-    let nextPos = [];
+    let nextPos;
 
     switch (dir) {
       case "up":
-        nextPos = this.currPos.map((row) =>
-          row.map((tileNo) => tileNo - boardLength)
-        );
+        nextPos = this.currPos - boardLength;
         break;
       case "down":
-        nextPos = this.currPos.map((row) =>
-          row.map((tileNo) => tileNo + boardLength)
-        );
+        nextPos = this.currPos + boardLength;
         break;
       case "left":
-        nextPos = this.currPos.map((row) => row.map((tileNo) => tileNo - 1));
+        nextPos = this.currPos - 1;
         break;
       case "right":
-        nextPos = this.currPos.map((row) => row.map((tileNo) => tileNo + 1));
+        nextPos = this.currPos + 1;
         break;
       default:
         break;

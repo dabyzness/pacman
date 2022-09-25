@@ -267,10 +267,10 @@ function startPlayInterval() {
     if (count === 3) {
       unRenderPos(game.player, tiles, game.board);
       game.movePlayer();
-      // game.ghosts.forEach((ghost) => {
-      //   unRenderPos(ghost, tiles, game.board);
-      //   game.moveGhost(ghost);
-      // });
+      game.ghosts.forEach((ghost) => {
+        unRenderPos(ghost, tiles, game.board);
+        game.moveGhost(ghost);
+      });
       count = 0;
     } else {
       count += 1;

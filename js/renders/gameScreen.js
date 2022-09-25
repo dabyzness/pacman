@@ -121,20 +121,25 @@ function renderGhost(ghosts, pillTimer, tilesEl) {
   }
 
   ghosts.forEach((ghost) => {
-    ghost.currPos.forEach((pos, i) => {
-      tilesEl[pos[1]].setAttribute(
-        "class",
-        `tile ${ghost.name} ${ghostLayout[i][1]} ${canBeEaten}`
-      );
-      tilesEl[pos[0]].setAttribute(
-        "class",
-        `tile ${ghost.name} ${ghostLayout[i][0]} ${canBeEaten}`
-      );
-      tilesEl[pos[2]].setAttribute(
-        "class",
-        `tile ${ghost.name} ${ghostLayout[i][2]} ${canBeEaten}`
-      );
-    });
+    tilesEl[ghost.currPos].setAttribute(
+      "class",
+      `tile ${ghost.name} ghost ${canBeEaten}`
+    );
+
+    // ghost.currPos.forEach((pos, i) => {
+    //   tilesEl[pos[1]].setAttribute(
+    //     "class",
+    //     `tile ${ghost.name} ${ghostLayout[i][1]} ${canBeEaten}`
+    //   );
+    //   tilesEl[pos[0]].setAttribute(
+    //     "class",
+    //     `tile ${ghost.name} ${ghostLayout[i][0]} ${canBeEaten}`
+    //   );
+    //   tilesEl[pos[2]].setAttribute(
+    //     "class",
+    //     `tile ${ghost.name} ${ghostLayout[i][2]} ${canBeEaten}`
+    //   );
+    // });
   });
 }
 

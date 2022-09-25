@@ -213,46 +213,49 @@ export class Game {
     }
   }
 
-  // moveGhost(ghost) {
-  //   const choices = [];
+  moveGhost(ghost) {
+    const choices = [];
 
-  //   ["up", "down", "left", "right"].forEach((dir) => {
-  //     if (ghost.direction === "left" && dir === "right") {
-  //       return;
-  //     } else if (ghost.direction === "right" && dir === "left") {
-  //       return;
-  //     } else if (ghost.direction === "up" && dir === "down") {
-  //       return;
-  //     } else if (ghost.direction === "down" && dir === "up") {
-  //       return;
-  //     }
+    ["up", "down", "left", "right"].forEach((dir) => {
+      if (ghost.direction === "left" && dir === "right") {
+        return;
+      } else if (ghost.direction === "right" && dir === "left") {
+        return;
+      } else if (ghost.direction === "up" && dir === "down") {
+        return;
+      } else if (ghost.direction === "down" && dir === "up") {
+        return;
+      }
 
-  //     const nextPos = ghost.getNextPos(this.board[0].length, dir);
+      const nextPos = ghost.getNextPos(this.board[0].length, dir);
 
-  //     if (this.isWallAhead(nextPos, dir)) {
-  //       return;
-  //     }
+      if (this.isWallAhead(nextPos, dir)) {
+        return;
+      }
 
-  //     if (nextPos[2][1] === 1292) {
-  //       return;
-  //     }
-  //     choices.push([nextPos, dir]);
-  //   });
+      // SO they don't go back in the box -- need to refine
+      // if (nextPos[2][1] === 1292) {
+      //   return;
+      // }
 
-  //   if (!choices.length) {
-  //     const onlyPos = ghost.currPos.map((row) =>
-  //       row.map((pos) => (ghost.direction === "left" ? pos + 53 : pos - 53))
-  //     );
+      choices.push([nextPos, dir]);
+    });
 
-  //     ghost.setCurrPos(onlyPos);
-  //     return;
-  //   }
+    if (!choices.length) {
+      const onlyPos =
+        ghost.direction === "left"
+          ? pos + this.board[0].length
+          : pos - this.board[0].length;
 
-  //   const randomIndex = Math.floor(Math.random() * choices.length);
+      ghost.setCurrPos(onlyPos);
+      return;
+    }
 
-  //   ghost.setCurrPos(choices[randomIndex][0]);
-  //   ghost.setDirection(choices[randomIndex][1]);
-  // }
+    const randomIndex = Math.floor(Math.random() * choices.length);
+
+    ghost.setCurrPos(choices[randomIndex][0]);
+    ghost.setDirection(choices[randomIndex][1]);
+  }
 
   // isGhostTouching(tile) {
   //   if (["blinky", "pinky", "inky", "clyde"].includes(tile.classList[1])) {
