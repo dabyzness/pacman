@@ -1,4 +1,5 @@
-const blinkyStart = 1339;
+// const blinkyStart = 1339;
+const blinkyStart = 1653;
 const pinkyStart = 1681;
 const inkyStart = 1677;
 const clydeStart = 1685;

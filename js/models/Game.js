@@ -3,6 +3,7 @@ import { Pacman } from "./Pacman.js";
 import { Ghost } from "./Ghost.js";
 
 const ghostNames = ["blinky", "pinky", "inky", "clyde"];
+// const ghostNames = ["blinky"];
 
 export class Game {
   constructor(board, livesLeft, points) {
@@ -26,11 +27,19 @@ export class Game {
   }
 
   isWallAhead(nextPos, direction) {
+    // Alter this function for detecing moving between lanes.
+    console.log(nextPos);
     let row = this.getTileRow(nextPos);
     let col = this.getTileCol(nextPos);
 
     if (this.board[row][col].value <= 0) {
+      console.log("Hugh Mungus");
       return true;
+    }
+
+    if (col === 0 || col === this.board[0].length - 1) {
+      console.log("ERRORRRRRRRRRRRRRRRRRRRR");
+      return false;
     }
 
     switch (direction) {
@@ -216,6 +225,20 @@ export class Game {
   moveGhost(ghost) {
     const choices = [];
 
+    if (ghost.currPos === 1709 && ghost.direction === "right") {
+      ghost.setCurrPos(1653);
+      return;
+    } else if (ghost.currPos === 1653 && ghost.direction === "right") {
+      ghost.setCurrPos(1654);
+      return;
+    } else if (ghost.currPos === 1653 && ghost.direction === "left") {
+      ghost.setCurrPos(1709);
+      return;
+    } else if (ghost.currPos === 1709 && ghost.direction === "left") {
+      ghost.setCurrPos(1708);
+      return;
+    }
+
     ["up", "down", "left", "right"].forEach((dir) => {
       if (ghost.direction === "left" && dir === "right") {
         return;
@@ -240,16 +263,6 @@ export class Game {
 
       choices.push([nextPos, dir]);
     });
-
-    if (!choices.length) {
-      const onlyPos =
-        ghost.direction === "left"
-          ? pos + this.board[0].length
-          : pos - this.board[0].length;
-
-      ghost.setCurrPos(onlyPos);
-      return;
-    }
 
     const randomIndex = Math.floor(Math.random() * choices.length);
 

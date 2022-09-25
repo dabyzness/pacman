@@ -47,7 +47,6 @@ function renderRemainingLives(remainingLivesEl, lives) {
 }
 
 function renderPos(direction, currPos, tilesEl) {
-  console.log(currPos);
   tilesEl[currPos].classList.add("puckman");
   switch (direction) {
     case "up":
